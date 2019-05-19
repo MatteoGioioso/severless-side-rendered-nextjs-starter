@@ -18,6 +18,7 @@ const Index = ({ posts }) => {
           <section id="two" className="spotlights">
             {posts.map(post => (
               <Post
+                key={post.id}
                 id={post.id}
                 title={post.title}
                 summary={post.summary}
