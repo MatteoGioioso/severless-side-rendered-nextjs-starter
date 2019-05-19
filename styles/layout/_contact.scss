@@ -1,93 +1,85 @@
-///
-/// Forty by HTML5 UP
-/// html5up.net | @ajlkn
-/// Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-///
+#contact {
+  border-bottom: solid 1px _palette(fg-lighter);
+  overflow-x: hidden;
 
-/* Contact */
+  > .inner {
+    @include vendor('display', 'flex');
+    padding: 0 !important;
 
-	#contact {
-		border-bottom: solid 1px _palette(border);
-		overflow-x: hidden;
+    > :nth-child(2n - 1) {
+      @include padding(4em, 0, (0, 3em, 0, 0));
+      border-right: solid 1px _palette(fg-lighter);
+      width: 60%;
+    }
 
-		> .inner {
-			@include vendor('display', 'flex');
-			padding: 0 !important;
+    > :nth-child(2n) {
+      padding-left: 3em;
+      width: 40%;
+    }
 
-			> :nth-child(2n - 1) {
-				@include padding(4em, 0, (0, 3em, 0, 0));
-				border-right: solid 1px _palette(border);
-				width: 60%;
-			}
+    > .split {
+      padding: 0;
 
-			> :nth-child(2n) {
-				padding-left: 3em;
-				width: 40%;
-			}
+      > * {
+        @include padding(3em, 0, (0, 0, 0, 3em));
+        position: relative;
 
-			> .split {
-				padding: 0;
+        &:before {
+          border-top: solid 1px _palette(fg-lighter);
+          content: '';
+          display: block;
+          margin-left: -3em;
+          position: absolute;
+          top: 0;
+          width: calc(100vw + 3em);
+        }
+      }
 
-				> * {
-					@include padding(3em, 0, (0, 0, 0, 3em));
-					position: relative;
+      > :first-child {
+        &:before {
+          display: none;
+        }
+      }
+    }
+  }
 
-					&:before {
-						border-top: solid 1px _palette(border);
-						content: '';
-						display: block;
-						margin-left: -3em;
-						position: absolute;
-						top: 0;
-						width: calc(100vw + 3em);
-					}
-				}
+  @include breakpoint(medium) {
+    > .inner {
+      display: block;
 
-				> :first-child {
-					&:before {
-						display: none;
-					}
-				}
-			}
-		}
+      > :nth-child(2n - 1) {
+        @include padding(4em, 0, (0, 0, 0, 0));
+        border-right: 0;
+        width: 100%;
+      }
 
-		@include breakpoint(medium) {
-			> .inner {
-				display: block;
+      > :nth-child(2n) {
+        padding-left: 0;
+        width: 100%;
+      }
 
-				> :nth-child(2n - 1) {
-					@include padding(4em, 0, (0, 0, 0, 0));
-					border-right: 0;
-					width: 100%;
-				}
+      > .split {
+        > * {
+          @include padding(3em, 0, (0, 0, 0, 0));
 
-				> :nth-child(2n) {
-					padding-left: 0;
-					width: 100%;
-				}
+          &:before {
+          }
+        }
 
-				> .split {
-					> * {
-						@include padding(3em, 0, (0, 0, 0, 0));
+        > :first-child {
+          &:before {
+            display: block;
+          }
+        }
+      }
+    }
+  }
 
-						&:before {
-						}
-					}
-
-					> :first-child {
-						&:before {
-							display: block;
-						}
-					}
-				}
-			}
-		}
-
-		@include breakpoint(small) {
-			> .inner {
-				> :nth-child(2n - 1) {
-					@include padding(3em, 0, (0, 0, 0, 0));
-				}
-			}
-		}
-	}
+  @include breakpoint(small) {
+    > .inner {
+      > :nth-child(2n - 1) {
+        @include padding(3em, 0, (0, 0, 0, 0));
+      }
+    }
+  }
+}

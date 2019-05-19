@@ -1,0 +1,23 @@
+export const colors = {
+  whitebg: "#f6f1eb",
+  whitebg_2: "#eae5df",
+  menubg: "rgba(246, 241, 235, 0.9)",
+  bg: "rgba(246, 241, 235, 0.5)",
+  bgalt: "#212e37",
+  fg: "#596d64",
+  fgbold: "#899985",
+  fglight: "#6b8170",
+  fglighter: "#89998570",
+  border: "rgba(212, 212, 255, 0.1)",
+  borderbg: "rgba(212, 212, 255, 0.035)",
+  highlight: "#536470",
+  accent1: "#3a4954",
+  accent2: "#212e37",
+  accent3: "#152530",
+  accent4: "#0a1924",
+  other1: "#57796a",
+  other2: "#3c5a4d",
+  other3: "#223b30",
+  other4: "#153426",
+  other5: "#092719"
+};
