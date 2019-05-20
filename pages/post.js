@@ -3,8 +3,8 @@ import Head from "next/head";
 import Layout from "../components/Layout";
 import { contentfulClient } from "../services/Contentful";
 
-const Post = ({ query }) => {
-  console.log(query)
+const Post = ({ request }) => {
+  console.log(request, request.params)
   return (
     <Layout>
       <Head>
@@ -59,9 +59,9 @@ const Post = ({ query }) => {
   );
 };
 
-Post.getInitialProps = async ({ query }) => {
+Post.getInitialProps = async (request) => {
   return {
-    query
+    request
   };
 };
 

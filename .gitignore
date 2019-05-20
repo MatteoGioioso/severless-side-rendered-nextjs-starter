@@ -7,3 +7,4 @@ yarn.lock
 package-lock.json
 .idea/
 _next/
+firebase-debug.log
