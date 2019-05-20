@@ -3,6 +3,7 @@ const glob = require("glob");
 
 module.exports = {
   target: "serverless",
+  distDir: "./_next",
   webpack: (config, { dev }) => {
     config.module.rules.push(
       {

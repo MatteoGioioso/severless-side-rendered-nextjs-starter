@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-forty",
+  "name": "hirviblog",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,9 @@
     "dev": "node server.js",
     "build": "next build",
     "start": "node server.js",
-    "export": "NODE_ENV=production node server.js"
+    "export": "NODE_ENV=production node server.js",
+    "serve-latest": "npm run build && sudo firebase serve --only functions,hosting",
+    "serve": "sudo firebase serve --only functions,hosting"
   },
   "keywords": [],
   "author": "",
