@@ -13,9 +13,9 @@ export default ({ seoConfig = {} }) => {
       config={{
         title: seo.title,
         description: seo.description,
-        canonical: "https://www.blod.hirvitek.com/",
+        canonical: "https://www.blog.hirvitek.com/",
         openGraph: {
-          url: `https://www.blod.hirvitek.com/${seo.url}`,
+          url: `https://www.blog.hirvitek.com/${seo.url}`,
           title: seo.title,
           description: seo.description,
           images: [

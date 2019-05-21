@@ -28,7 +28,7 @@ const Post = ({ title, id, summary, imageUrl, createdAt }) => {
 
   return (
     <SectionContainer>
-      <Link href={`/post?id=${postId}`} as={`/post/${postId}`}>
+      <Link href={`/post?postId=${postId}`} as={`/post/${postId}`}>
         <a className="image">
           <img src={imageUrl} alt="" />
         </a>
