@@ -28,6 +28,7 @@ const Post = ({ post, postId }) => {
               <img src={post.imagesUrls[0]} alt="" />
             </span>
             <div
+              className='markdown-post'
               dangerouslySetInnerHTML={{
                 __html: documentToHtmlString(post.content)
               }}
@@ -39,8 +40,16 @@ const Post = ({ post, postId }) => {
   );
 };
 
-Post.getInitialProps = async ({ req }) => {
-  const { postId } = req.params;
+Post.getInitialProps = async request => {
+  const getId = request => {
+    if (request.req) {
+      return request.req.params.postId;
+    } else {
+      return request.query.postId;
+    }
+  };
+
+  const postId = getId(request)
 
   const id = postId.split("_")[1];
 

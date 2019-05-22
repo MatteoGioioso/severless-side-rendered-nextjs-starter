@@ -2,6 +2,8 @@
 
 #main {
   background-color: _palette(white-bg);
+  padding-left: 18vw;
+  padding-right: 18vw;
 
   > * {
     border-top: solid 1px _palette(border);
@@ -16,5 +18,10 @@
   &.alt {
     background-color: transparent;
     border-bottom: solid 1px _palette(border);
+  }
+
+  @include breakpoint(small) {
+    padding-left: 2vw;
+    padding-right: 2vw;
   }
 }

@@ -35,40 +35,40 @@ const Post = ({ title, id, summary, imageUrl, createdAt }) => {
       </Link>
       <div className="content">
         <div className="inner">
-          <header className="major">
-            <h3 style={{ color: colors.bgalt }}>{title}</h3>
+          <header className="major" style={{marginBottom: '10px'}}>
+            <h3 style={{ color: colors.bgalt, fontSize: '18px' }}>{title}</h3>
           </header>
-          <p>{summary.substring(0, 300)}</p>
-          <ul className="actions" />
+          <p style={{fontSize: '16px', marginBottom: '20px'}}>{summary.substring(0, 300)}</p>
+          
         </div>
 
         <div>
-          <h5 style={{ color: colors.bgalt }}>{displayDate} </h5>
+          <h5 style={{ color: colors.bgalt, fontSize: '14px' }}>{displayDate} </h5>
         </div>
 
         <div>
           <ul className="icons">
-            <li>
-              <a href="#" className="icon alt fa-twitter">
+            <li style={{paddingRight: '5px'}}>
+              <a href="#" className="icon alt fa-twitter fa-sm">
                 <span className="label">Twitter</span>
               </a>
             </li>
-            <li>
+            <li style={{paddingRight: '5px'}}>
               <a href="#" className="icon alt fa-facebook">
                 <span className="label">Facebook</span>
               </a>
             </li>
-            <li>
+            <li style={{paddingRight: '5px'}}>
               <a href="#" className="icon alt fa-instagram">
                 <span className="label">Instagram</span>
               </a>
             </li>
-            <li>
+            <li style={{paddingRight: '5px'}}>
               <a href="#" className="icon alt fa-github">
                 <span className="label">GitHub</span>
               </a>
             </li>
-            <li>
+            <li style={{paddingRight: '5px'}}>
               <a href="#" className="icon alt fa-linkedin">
                 <span className="label">LinkedIn</span>
               </a>
