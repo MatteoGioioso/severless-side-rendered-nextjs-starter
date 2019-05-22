@@ -1,11 +1,8 @@
 const functions = require("firebase-functions");
 const express = require("express");
-const mainPage = require("../_next/serverless/pages/index");
-const postPage = require("../_next/serverless/pages/post");
-const path = require("path");
+const mainPage = require("./next/serverless/pages/index");
+const postPage = require("./next/serverless/pages/post");
 const app = express();
-
-app.use(express.static(path.join(__dirname, "_next")));
 
 app.get("/", (request, response) => {
   mainPage.render(request, response);

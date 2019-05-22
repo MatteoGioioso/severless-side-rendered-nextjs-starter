@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "hirviweb"
+  },
+  "targets": {
+    "hirviweb": {
+      "hosting": {
+        "blog": [
+          "hirviblog"
+        ]
+      }
+    }
   }
 }
