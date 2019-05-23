@@ -9,3 +9,5 @@ package-lock.json
 _next/
 firebase-debug.log
 .firebase/
+public/static/
+public/_next/

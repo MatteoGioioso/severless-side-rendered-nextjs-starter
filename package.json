@@ -9,7 +9,10 @@
     "start": "node server.js",
     "export": "NODE_ENV=production node server.js",
     "serve-latest": "npm run build && sudo firebase serve --only functions,hosting",
-    "serve": "sudo firebase serve --only functions,hosting"
+    "serve": "sudo firebase serve --only functions,hosting",
+    "clean:public": "rm -rf public/static/ && rm -rf public/_next/static && rm -rf functions/_next/",
+    "build:public": "cpx \"functions/_next/static/**/*.*\" public/_next/static/  && cpx \"static/**/*.*\" public/static/",
+    "predeploy": "npm run clean:public && npm run build && npm run build:public"
   },
   "keywords": [],
   "author": "",
@@ -34,5 +37,9 @@
     "react-share": "^3.0.0",
     "sass-loader": "^7.1.0",
     "styled-components": "^4.2.0"
+  },
+  "devDependencies": {
+    "cpx": "^1.5.0",
+    "rimraf": "^2.6.3"
   }
 }
