@@ -8,7 +8,6 @@
     "build": "next build",
     "start": "node server.js",
     "export": "NODE_ENV=production node server.js",
-    "serve-latest": "npm run build && sudo firebase serve --only functions,hosting",
     "serve": "sudo firebase serve --only functions,hosting",
     "clean:public": "rm -rf public/static/ && rm -rf public/_next/static && rm -rf functions/_next/",
     "build:public": "cpx \"functions/_next/static/**/*.*\" public/_next/static/  && cpx \"static/**/*.*\" public/static/",
