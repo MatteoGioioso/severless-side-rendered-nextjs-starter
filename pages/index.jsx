@@ -5,33 +5,42 @@ import Post from "../components/Posts/Post";
 import React from "react";
 import { colors } from "../components/Styled/vars";
 import { contentfulClient } from "../services/Contentful";
+import { registerServiceWorker } from "../services/helpers";
 
-const Index = ({ posts }) => {
-  return (
-    <Layout>
-      <SEO />
+class Index extends React.Component {
+  componentDidMount() {
+    registerServiceWorker()
+  }
 
-      <div style={{ backgroundColor: colors.whitebg }}>
-        <BannerLanding />
+  render() {
+    const { posts } = this.props;
 
-        <div id="main">
-          <section id="two" className="spotlights">
-            {posts.map(post => (
-              <Post
-                key={post.id}
-                id={post.id}
-                title={post.title}
-                summary={post.summary}
-                imageUrl={post.imagesUrls[0]}
-                createdAt={post.createdAt}
-              />
-            ))}
-          </section>
+    return (
+      <Layout>
+        <SEO />
+
+        <div style={{ backgroundColor: colors.whitebg }}>
+          <BannerLanding />
+
+          <div id="main">
+            <section id="two" className="spotlights">
+              {posts.map(post => (
+                <Post
+                  key={post.id}
+                  id={post.id}
+                  title={post.title}
+                  summary={post.summary}
+                  imageUrl={post.imagesUrls[0]}
+                  createdAt={post.createdAt}
+                />
+              ))}
+            </section>
+          </div>
         </div>
-      </div>
-    </Layout>
-  );
-};
+      </Layout>
+    );
+  }
+}
 
 Index.getInitialProps = async ({ req }) => {
   const data = await contentfulClient.getEntries({
