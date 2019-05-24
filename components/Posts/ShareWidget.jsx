@@ -18,11 +18,12 @@ import {
   RedditIcon,
   EmailIcon
 } from "react-share";
+import SharingButtons from "./SharingButtons";
 
 const WidgetContainer = styled.div`
   position: fixed;
   left: 1%;
-  top: 50%;
+  top: 30%;
   z-index: 100;
   background-color: ${colors.whitebg};
   padding: 2%;
@@ -32,53 +33,7 @@ const WidgetContainer = styled.div`
 const ShareWidget = ({ url }) => {
   return (
     <WidgetContainer>
-      <FacebookShareButton url={url}>
-        <FacebookIcon
-          size={40}
-          iconBgStyle={{ fill: colors.whitebg }}
-          logoFillColor={"rgba(0,0,0,.76)"}
-        />
-      </FacebookShareButton>
-
-      <RedditShareButton url={url}>
-        <RedditIcon
-          size={40}
-          iconBgStyle={{ fill: colors.whitebg }}
-          logoFillColor={"rgba(0,0,0,.76)"}
-        />
-      </RedditShareButton>
-
-      <TwitterShareButton url={url}>
-        <TwitterIcon
-          size={40}
-          iconBgStyle={{ fill: colors.whitebg }}
-          logoFillColor={"rgba(0,0,0,.76)"}
-        />
-      </TwitterShareButton>
-
-      <LinkedinShareButton url={url}>
-        <LinkedinIcon
-          size={40}
-          iconBgStyle={{ fill: colors.whitebg }}
-          logoFillColor={"rgba(0,0,0,.76)"}
-        />
-      </LinkedinShareButton>
-
-      <WhatsappShareButton url={url}>
-        <WhatsappIcon
-          size={40}
-          iconBgStyle={{ fill: colors.whitebg }}
-          logoFillColor={"rgba(0,0,0,.76)"}
-        />
-      </WhatsappShareButton>
-
-      <EmailShareButton url={url}>
-        <EmailIcon
-          size={40}
-          iconBgStyle={{ fill: colors.whitebg }}
-          logoFillColor={"rgba(0,0,0,.76)"}
-        />
-      </EmailShareButton>
+      <SharingButtons url={url}/>
     </WidgetContainer>
   );
 };

@@ -3,10 +3,11 @@ import { contentfulClient } from "../services/Contentful";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import SEO from "../components/SEO";
 import React from "react";
-import { registerServiceWorker } from "../services/helpers";
+import { registerServiceWorker, isMobile } from "../services/helpers";
 import ShareWidget from "../components/Posts/ShareWidget";
 import { colors } from "../components/Styled/vars";
 import styled from "styled-components";
+import BottomSharedWidget from "../components/Posts/BottomShareWidget";
 
 const PostTitleContainer = styled.div`
   display: flex;
@@ -18,11 +19,16 @@ class Post extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      isMobile: false
+    };
+
     this.displayDate = this.displayDate.bind(this);
   }
 
   componentDidMount() {
     registerServiceWorker();
+    this.setState({ isMobile: isMobile() });
   }
 
   displayDate() {
@@ -49,7 +55,13 @@ class Post extends React.Component {
         <PostTitleContainer className="post-title-container">
           <div>
             <header className="major" style={{ marginBottom: "3%" }}>
-              <h1 style={{ fontWeight: "400", lineHeight: "3.5rem", maxWidth: '98vw' }}>
+              <h1
+                style={{
+                  fontWeight: "400",
+                  lineHeight: "3.5rem",
+                  maxWidth: "98vw"
+                }}
+              >
                 {post.title}
               </h1>
             </header>
@@ -98,8 +110,16 @@ class Post extends React.Component {
               />
             </div>
           </section>
+          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: '-50px' }}>
+            <BottomSharedWidget
+              url={`https://blog.hirvitek.com/post/${postId}`}
+            />
+          </div>
         </div>
-        <ShareWidget url={`https://blog.hirvitek.com/post/${postId}`} />
+
+        {!this.state.isMobile && (
+          <ShareWidget url={`https://blog.hirvitek.com/post/${postId}`} />
+        )}
       </Layout>
     );
   }
