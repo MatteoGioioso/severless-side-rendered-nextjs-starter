@@ -9,7 +9,7 @@ import { registerServiceWorker } from "../services/helpers";
 
 class Index extends React.Component {
   componentDidMount() {
-    registerServiceWorker()
+    registerServiceWorker();
   }
 
   render() {
@@ -25,14 +25,7 @@ class Index extends React.Component {
           <div id="main">
             <section id="two" className="spotlights">
               {posts.map(post => (
-                <Post
-                  key={post.id}
-                  id={post.id}
-                  title={post.title}
-                  summary={post.summary}
-                  imageUrl={post.imagesUrls[0]}
-                  createdAt={post.createdAt}
-                />
+                <Post key={post.id} {...post} imageUrl={post.imagesUrls[0]} />
               ))}
             </section>
           </div>

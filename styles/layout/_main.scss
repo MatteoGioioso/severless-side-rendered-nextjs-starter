@@ -25,3 +25,14 @@
     padding-right: 2vw;
   }
 }
+
+.post-title-container {
+  padding-left: 18vw;
+  padding-right: 18vw;
+  padding-top: 5%;
+
+  @include breakpoint(small) {
+    padding-left: 2vw;
+    padding-right: 2vw;
+  }
+}

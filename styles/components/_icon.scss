@@ -4,7 +4,7 @@
   @include icon;
   border-bottom: none;
   position: relative;
-  font-size: 14px;
+  font-size: 18px;
 
   > .label {
     display: none;
@@ -28,8 +28,8 @@ a.icon {
   &.alt {
     &:before {
       @include vendor(
-        'transition',
-        'background-color #{_duration(transition)} ease-in-out'
+        "transition",
+        "background-color #{_duration(transition)} ease-in-out"
       );
     }
 
@@ -45,4 +45,8 @@ a.icon {
       }
     }
   }
+}
+
+.icon-article {
+  font-size: 12px;
 }

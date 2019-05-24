@@ -2,17 +2,39 @@ import Layout from "../components/Layout";
 import { contentfulClient } from "../services/Contentful";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import SEO from "../components/SEO";
-import BannerLanding from "../components/BannerLanding";
 import React from "react";
 import { registerServiceWorker } from "../services/helpers";
+import ShareWidget from "../components/Posts/ShareWidget";
+import { colors } from "../components/Styled/vars";
+import styled from "styled-components";
+
+const PostTitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
 
 class Post extends React.Component {
-  componentDidMount() {
-    registerServiceWorker()
+  constructor(props) {
+    super(props);
+
+    this.displayDate = this.displayDate.bind(this);
   }
-  
-  render(){
-    const {post, postId} = this.props;
+
+  componentDidMount() {
+    registerServiceWorker();
+  }
+
+  displayDate() {
+    return new Date(this.props.createdAt)
+      .toUTCString()
+      .split(" ")
+      .slice(0, 4)
+      .join(" ");
+  }
+
+  render() {
+    const { post, postId } = this.props;
 
     return (
       <Layout>
@@ -23,18 +45,55 @@ class Post extends React.Component {
             url: postId
           }}
         />
-        <BannerLanding
-          imageUrl={post.imagesUrls[0]}
-          summary={post.summary}
-          title={post.title}
-        />
-  
+
+        <PostTitleContainer className="post-title-container">
+          <div>
+            <header className="major" style={{ marginBottom: "3%" }}>
+              <h1 style={{ fontWeight: "400", lineHeight: "3.5rem" }}>
+                {post.title}
+              </h1>
+            </header>
+            <h5 style={{ fontWeight: "200", fontSize: "20px" }}>
+              {post.summary}
+            </h5>
+
+            <div>
+              <h4 style={{ fontSize: "16px", marginBottom: "0px" }}>
+                {post.author}
+              </h4>
+              <p style={{ fontSize: "16px", marginBottom: "0px" }}>
+                {post.authorTitle}
+              </p>
+              <p
+                style={{
+                  fontSize: "16px",
+                  marginBottom: "0px",
+                  fontWeight: "400"
+                }}
+              >
+                {this.displayDate()}
+              </p>
+            </div>
+          </div>
+          <br />
+        </PostTitleContainer>
+
+        <div>
+          {/* <img src={post.imagesUrls[0]} alt="" style={{ margin: 'auto' }} /> */}
+          <div
+            style={{
+              height: '25vw',
+              background: `url("${
+                post.imagesUrls[0]
+              }") top center no-repeat`,
+              backgroundSize: "cover"
+            }}
+          />
+        </div>
+
         <div id="main" className="alt">
           <section id="one">
             <div className="inner">
-              <span className="image main">
-                <img src={post.imagesUrls[0]} alt="" />
-              </span>
               <div
                 className="markdown-post"
                 dangerouslySetInnerHTML={{
@@ -44,6 +103,7 @@ class Post extends React.Component {
             </div>
           </section>
         </div>
+        <ShareWidget url={`https://blog.hirvitek.com/post/${postId}`} />
       </Layout>
     );
   }
@@ -64,8 +124,11 @@ Post.getInitialProps = async request => {
 
   const data = await contentfulClient.getEntry(id);
 
+  console.log(data);
+
   return {
     post: data.fields,
+    createdAt: data.sys.createdAt,
     postId
   };
 };
