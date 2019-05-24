@@ -49,7 +49,7 @@ class Post extends React.Component {
         <PostTitleContainer className="post-title-container">
           <div>
             <header className="major" style={{ marginBottom: "3%" }}>
-              <h1 style={{ fontWeight: "400", lineHeight: "3.5rem" }}>
+              <h1 style={{ fontWeight: "400", lineHeight: "3.5rem", maxWidth: '98vw' }}>
                 {post.title}
               </h1>
             </header>
@@ -78,18 +78,14 @@ class Post extends React.Component {
           <br />
         </PostTitleContainer>
 
-        <div>
-          {/* <img src={post.imagesUrls[0]} alt="" style={{ margin: 'auto' }} /> */}
-          <div
-            style={{
-              height: '25vw',
-              background: `url("${
-                post.imagesUrls[0]
-              }") top center no-repeat`,
-              backgroundSize: "cover"
-            }}
-          />
-        </div>
+        <div
+          style={{
+            width: "100%",
+            height: "350px",
+            background: `url("${post.imagesUrls[0]}") center no-repeat`,
+            backgroundSize: "cover"
+          }}
+        />
 
         <div id="main" className="alt">
           <section id="one">
@@ -123,8 +119,6 @@ Post.getInitialProps = async request => {
   const id = postId.split("_")[1];
 
   const data = await contentfulClient.getEntry(id);
-
-  console.log(data);
 
   return {
     post: data.fields,
