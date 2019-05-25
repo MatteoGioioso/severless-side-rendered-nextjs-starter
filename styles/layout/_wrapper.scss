@@ -1,6 +1,7 @@
 /* Wrapper */
 
 #wrapper {
+  background-color: _palette(white-bg);
   @include vendor(
     'transition',
     (

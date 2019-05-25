@@ -9,7 +9,7 @@ article {
 
 header {
   &.major {
-    margin-bottom: _size(element-margin);
+    //margin-bottom: _size(element-margin);
 
     > :first-child {
       margin-bottom: 0;
@@ -21,7 +21,6 @@ header {
       font-weight: _font(weight-bold);
       letter-spacing: _font(letter-spacing-alt);
       margin-bottom: 0;
-      text-transform: uppercase;
     }
 
     body.is-ie & {
