@@ -20,7 +20,6 @@ const Subtitle = styled.h5`
   font-weight: 400;
 `;
 
-
 const Post = ({
   title,
   id,
@@ -43,7 +42,7 @@ const Post = ({
 
   return (
     <SectionContainer>
-      <Link href={`/post?postId=${postId}`} as={`/post/${postId}`}>
+      <Link prefetch href={`/post?postId=${postId}`} as={`/post/${postId}`}>
         <a className="image">
           <img src={imageUrl} alt="" />
         </a>
@@ -78,7 +77,7 @@ const Post = ({
             </div>
 
             <div>
-              <ul className="icons" style={{margin: 0}}>
+              <ul className="icons" style={{ margin: 0 }}>
                 <li style={{ paddingRight: "5px" }}>
                   <a
                     href="#"

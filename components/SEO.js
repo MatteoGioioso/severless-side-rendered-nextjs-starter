@@ -5,7 +5,8 @@ export default ({ seoConfig = {} }) => {
   const seo = {
     title: seoConfig.title || "Hirvitek blog",
     description: seoConfig.description || "The hub of brilliant ideas",
-    url: seoConfig.url || ""
+    url: seoConfig.url || "",
+    imageUrl: seoConfig.imageUrl || "https://blog.hirvitek.com/static/images/icons/icon-512x512.png"
   };
 
   return (
@@ -18,9 +19,9 @@ export default ({ seoConfig = {} }) => {
           url: `https://www.blog.hirvitek.com/${seo.url}`,
           title: seo.title,
           description: seo.description,
-          image: [
+          images: [
             {
-              url: "https://www.example.ie/og-image-01.jpg",
+              url: seo.imageUrl,
               width: 800,
               height: 600,
               alt: "Og Image Alt"

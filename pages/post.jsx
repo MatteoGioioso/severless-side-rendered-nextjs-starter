@@ -5,9 +5,9 @@ import SEO from "../components/SEO";
 import React from "react";
 import { registerServiceWorker, isMobile } from "../services/helpers";
 import ShareWidget from "../components/Posts/ShareWidget";
-import { colors } from "../components/Styled/vars";
 import styled from "styled-components";
 import BottomSharedWidget from "../components/Posts/BottomShareWidget";
+import {initGA, logPageView} from "../services/GoogleAnalytics";
 
 const PostTitleContainer = styled.div`
   display: flex;
@@ -28,6 +28,8 @@ class Post extends React.Component {
 
   componentDidMount() {
     registerServiceWorker();
+    initGA();
+    logPageView();
     this.setState({ isMobile: isMobile() });
   }
 
@@ -48,7 +50,8 @@ class Post extends React.Component {
           seoConfig={{
             title: post.title,
             description: post.summary,
-            url: postId
+            url: postId,
+            imageUrl: post.imagesUrls[0]
           }}
         />
 

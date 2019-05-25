@@ -6,10 +6,13 @@ import React from "react";
 import { colors } from "../components/Styled/vars";
 import { contentfulClient } from "../services/Contentful";
 import { registerServiceWorker } from "../services/helpers";
+import { initGA, logPageView } from "../services/GoogleAnalytics";
 
 class Index extends React.Component {
   componentDidMount() {
     registerServiceWorker();
+    initGA();
+    logPageView();
   }
 
   render() {
@@ -18,7 +21,6 @@ class Index extends React.Component {
     return (
       <Layout>
         <SEO />
-
         <div style={{ backgroundColor: colors.whitebg }}>
           <BannerLanding />
 
