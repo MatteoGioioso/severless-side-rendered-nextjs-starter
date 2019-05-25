@@ -1,10 +1,10 @@
 import React from "react";
 import * as Sentry from "@sentry/browser";
+import ErrorPage from "../components/ErrorPage";
 
 Sentry.init({
   dsn: "https://154f5d38df25449d86b5cd1a6131ddab@sentry.io/1457543"
 });
-
 
 /**
  * Send an error event to Sentry.
@@ -19,7 +19,7 @@ Sentry.init({
  * component, so we can manually fire events here.
  */
 const notifySentry = (err, req, statusCode) => {
-  Sentry.configureScope((scope) => {
+  Sentry.configureScope(scope => {
     if (!req) {
       scope.setTag(`ssr`, false);
     } else {
@@ -58,6 +58,6 @@ export default class Error extends React.Component {
 
   render() {
     const { statusCode } = this.props;
-    return statusCode;
+    return <ErrorPage handleReportError={() => {}} statusCode={statusCode} />;
   }
 }

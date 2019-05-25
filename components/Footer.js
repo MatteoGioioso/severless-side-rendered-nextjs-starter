@@ -32,7 +32,7 @@ const Footer = props => (
           >
             <span className="label">LinkedIn</span>
           </a>
-        </li> */}
+        {/*</li> *!/*/}
 
         <li>
           <a
@@ -47,8 +47,9 @@ const Footer = props => (
       </ul>
       <ul className="copyright">
         <li>&copy; Hirvitek</li>
+        <li>Design: Matteo Gioioso</li>
         <li>
-          Design: Matteo Gioioso
+          <a href="mailto:info@hirvitek.com">info@hirvitek.com</a>
         </li>
       </ul>
     </div>

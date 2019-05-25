@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import Layout from "./Layout";
 import styled from "styled-components";
 
@@ -12,21 +12,27 @@ const ErrorPageContainer = styled.div`
   padding: 5%;
 `;
 
-const ErrorPage = ({handleReportError}) => {
+const ErrorPage = ({ handleReportError, statusCode = 500 }) => {
   return (
     <Layout>
       <ErrorPageContainer>
-        <h1>Sorry something went wrong =(</h1>
-        <h5>
-          A team of untrained moose has been sent into the forest to
-          investigate
-        </h5>
-        <p>Yes we keep our server there!</p>
-        <button
-          onClick={handleReportError}
-        >
-          Report feedback
-        </button>
+        {statusCode === 404 ? (
+          <h1>Moose not found!</h1>
+        ) : (
+          <h1>Sorry something went wrong =(</h1>
+        )}
+        {statusCode === 404 ? (
+          <h5>You have gone too deep into the forest</h5>
+        ) : (
+          <h5>
+            A team of untrained moose has been sent into the forest to
+            investigate
+          </h5>
+        )}
+        {statusCode === 404 || <p>Yes we keep our server there!</p>}
+        {statusCode === 404 || (
+          <button onClick={handleReportError}>Report feedback</button>
+        )}
       </ErrorPageContainer>
     </Layout>
   );

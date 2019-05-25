@@ -1,6 +1,6 @@
 import Document, { Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
-import "../services/GoogleAnalytics"
+import "../services/GoogleAnalytics";
 
 export default class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
@@ -40,8 +40,12 @@ export default class MyDocument extends Document {
             sizes="16x16"
             href="../static/images/icons/favicon-16x16.png"
           />
-      
-          <link rel="mask-icon" href="../static/images/icons/safari-pinned-tab.svg" color="#5bbad5" />
+
+          <link
+            rel="mask-icon"
+            href="../static/images/icons/safari-pinned-tab.svg"
+            color="#5bbad5"
+          />
           <meta name="msapplication-TileColor" content="#212e37" />
           <meta name="theme-color" content="#f6f1eb" />
           <link rel="manifest" href="../static/manifest.json" />

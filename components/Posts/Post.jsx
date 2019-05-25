@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { colors } from "../Styled/vars";
 import styled from "styled-components";
+import Router from "next/router";
+import { withRouter } from "next/router";
+import BottomSharedWidget from "./BottomShareWidget";
 
 const SectionContainer = styled.section`
   cursor: pointer;
@@ -18,6 +21,7 @@ const Subtitle = styled.h5`
   color: ${colors.bgalt};
   font-size: 13px;
   font-weight: 400;
+  margin-bottom: 0;
 `;
 
 const Post = ({
@@ -27,7 +31,8 @@ const Post = ({
   imageUrl,
   createdAt,
   author,
-  authorTitle
+  authorTitle,
+  router
 }) => {
   const postId = `${title
     .toLowerCase()
@@ -40,13 +45,21 @@ const Post = ({
     .slice(0, 4)
     .join(" ");
 
+  useEffect(() => {
+    router.prefetch(`/post/${postId}`);
+  });
+
   return (
-    <SectionContainer>
-      <Link prefetch href={`/post?postId=${postId}`} as={`/post/${postId}`}>
-        <a className="image">
-          <img src={imageUrl} alt="" />
-        </a>
-      </Link>
+    <SectionContainer
+      onClick={() => {
+        setTimeout(() => router.push(`/post/${postId}`), 100);
+      }}
+    >
+      {/*<Link prefetch href={`/post?postId=${postId}`} as={`/post/${postId}`}>*/}
+      <a className="image">
+        <img src={imageUrl} alt="" />
+      </a>
+      {/*</Link>*/}
       <div className="content">
         <div className="inner">
           <header className="major" style={{ marginBottom: "10px" }}>
@@ -76,38 +89,6 @@ const Post = ({
               <Subtitle>{displayDate}</Subtitle>
             </div>
 
-            <div>
-              <ul className="icons" style={{ margin: 0 }}>
-                <li style={{ paddingRight: "5px" }}>
-                  <a
-                    href="#"
-                    className="icon icon-article alt fa-twitter fa-sm"
-                  >
-                    <span className="label">Twitter</span>
-                  </a>
-                </li>
-                <li style={{ paddingRight: "5px" }}>
-                  <a href="#" className="icon icon-article alt fa-facebook">
-                    <span className="label">Facebook</span>
-                  </a>
-                </li>
-                <li style={{ paddingRight: "5px" }}>
-                  <a href="#" className="icon icon-article alt fa-instagram">
-                    <span className="label">Instagram</span>
-                  </a>
-                </li>
-                <li style={{ paddingRight: "5px" }}>
-                  <a href="#" className="icon icon-article alt fa-github">
-                    <span className="label">GitHub</span>
-                  </a>
-                </li>
-                <li style={{ paddingRight: "5px" }}>
-                  <a href="#" className="icon icon-article alt fa-linkedin">
-                    <span className="label">LinkedIn</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
       </div>
@@ -115,4 +96,4 @@ const Post = ({
   );
 };
 
-export default Post;
+export default withRouter(Post);

@@ -7,7 +7,8 @@ import { registerServiceWorker, isMobile } from "../services/helpers";
 import ShareWidget from "../components/Posts/ShareWidget";
 import styled from "styled-components";
 import BottomSharedWidget from "../components/Posts/BottomShareWidget";
-import {initGA, logPageView} from "../services/GoogleAnalytics";
+import { initGA, logPageView } from "../services/GoogleAnalytics";
+import Observer from "@researchgate/react-intersection-observer";
 
 const PostTitleContainer = styled.div`
   display: flex;
@@ -20,10 +21,18 @@ class Post extends React.Component {
     super(props);
 
     this.state = {
-      isMobile: false
+      isMobile: false,
+      bottomWidget: false,
+      articleStart: true
     };
 
     this.displayDate = this.displayDate.bind(this);
+    this.handleIntersection = this.handleIntersection.bind(this);
+  }
+
+  handleIntersection(event) {
+    const name = event.target.dataset.name;
+    this.setState({ [name]: event.isIntersecting });
   }
 
   componentDidMount() {
@@ -43,6 +52,17 @@ class Post extends React.Component {
 
   render() {
     const { post, postId } = this.props;
+
+    const options = {
+      onChange: this.handleIntersection,
+      rootMargin: "0% 0% 0%"
+    };
+
+    const renderSharingWidget = () => {
+      if (!this.state.bottomWidget && !this.state.articleStart) {
+        return <ShareWidget url={`https://blog.hirvitek.com/post/${postId}`} />;
+      }
+    };
 
     return (
       <Layout>
@@ -104,6 +124,10 @@ class Post extends React.Component {
 
         <div id="main" className="alt">
           <section id="one">
+            <Observer {...options}>
+              <div data-name="articleStart" />
+            </Observer>
+
             <div className="inner">
               <div
                 className="markdown-post"
@@ -113,16 +137,32 @@ class Post extends React.Component {
               />
             </div>
           </section>
-          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: '-50px' }}>
-            <BottomSharedWidget
-              url={`https://blog.hirvitek.com/post/${postId}`}
-            />
-          </div>
+
+          <Observer {...options}>
+            <div
+              data-name="bottomWidget"
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginTop: "-50px"
+              }}
+            >
+              <BottomSharedWidget
+                url={`https://blog.hirvitek.com/post/${postId}`}
+              />
+            </div>
+          </Observer>
+
+          {/*<form method="post" action="#">*/}
+          {/*  <div className="field half">*/}
+          {/*    <input type="text" name="email" id="email" placeholder="Email" />*/}
+          {/*  </div>*/}
+
+          {/*  <input type="submit" value="Subscribe" className="special" />*/}
+          {/*</form>*/}
         </div>
 
-        {!this.state.isMobile && (
-          <ShareWidget url={`https://blog.hirvitek.com/post/${postId}`} />
-        )}
+        {!this.state.isMobile && renderSharingWidget()}
       </Layout>
     );
   }
