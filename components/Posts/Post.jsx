@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
-import Link from "next/link";
 import { colors } from "../Styled/vars";
 import styled from "styled-components";
-import Router from "next/router";
 import { withRouter } from "next/router";
-import BottomSharedWidget from "./BottomShareWidget";
 
 const SectionContainer = styled.section`
   cursor: pointer;
@@ -46,20 +43,22 @@ const Post = ({
     .join(" ");
 
   useEffect(() => {
-    router.prefetch(`/post/${postId}`);
+    router.prefetch(`/post`);
   });
 
   return (
     <SectionContainer
       onClick={() => {
-        setTimeout(() => router.push(`/post/${postId}`), 100);
+        setTimeout(
+          () => router.push(`/post?postId=${postId}`, `/post/${postId}`),
+          100
+        );
       }}
     >
-      {/*<Link prefetch href={`/post?postId=${postId}`} as={`/post/${postId}`}>*/}
       <a className="image">
         <img src={imageUrl} alt="" />
       </a>
-      {/*</Link>*/}
+
       <div className="content">
         <div className="inner">
           <header className="major" style={{ marginBottom: "10px" }}>
@@ -88,7 +87,6 @@ const Post = ({
             <div>
               <Subtitle>{displayDate}</Subtitle>
             </div>
-
           </div>
         </div>
       </div>

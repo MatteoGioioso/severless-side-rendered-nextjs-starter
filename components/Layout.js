@@ -1,8 +1,6 @@
 import stylesheet from "styles/main.scss";
-
 import Header from "./Header";
 import Menu from "./Menu";
-import Contact from "./Contact";
 import Footer from "./Footer";
 import React from "react";
 
@@ -46,7 +44,6 @@ class Layout extends React.Component {
         <div id="wrapper">
           <Header onToggleMenu={this.handleToggleMenu} />
           {this.props.children}
-          {/*<Contact />*/}
           <Footer />
         </div>
         <Menu onToggleMenu={this.handleToggleMenu} />
