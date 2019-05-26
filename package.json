@@ -10,7 +10,7 @@
     "export": "NODE_ENV=production node server.js",
     "clean:public": "rm -rf public/static/ && rm -rf public/_next/static && rm -rf functions/_next/",
     "build:public": "cpx \"functions/_next/static/**/*.*\" public/_next/static/  && cpx \"static/**/*.*\" public/static/",
-    "predeploy": "npm run clean:public && npm run build && npm run build:public",
+    "predeploy": "npm run clean:public && npm run build && npm run build:public && node swBuild.js",
     "serve:only": " firebase serve --only functions,hosting",
     "serve": "npm run predeploy && npm run serve:only",
     "deploy": "npm run predeploy && firebase deploy --only hosting,functions --interactive"
