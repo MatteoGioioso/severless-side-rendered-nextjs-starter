@@ -12,10 +12,12 @@
     "node": "8"
   },
   "dependencies": {
+    "compression": "^1.7.4",
     "express": "^4.17.0",
     "firebase-admin": "~7.0.0",
     "firebase-functions": "^2.3.0",
-    "firebase-functions-test": "^0.1.6"
+    "firebase-functions-test": "^0.1.6",
+    "helmet": "^3.18.0"
   },
   "private": true
 }
