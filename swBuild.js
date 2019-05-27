@@ -1,8 +1,15 @@
 const fs = require("fs");
 const BASE_URL = "./public/_next/static";
 const DEST_FILE = "./public/sw-dynamic-assets.js";
+const SW_FILE = "./public/sw.js";
 const { resolve } = require("path");
-const { readdir, stat, writeFile, appendFile } = require("fs").promises;
+const {
+  readdir,
+  stat,
+  writeFile,
+  appendFile,
+  readFile
+} = require("fs").promises;
 const exec = require("child_process").exec;
 const crypto = require("crypto");
 
@@ -29,19 +36,15 @@ async function generateServiceWorkerVersion() {
     });
 
     myReadStream.on("error", function(err) {
-      console.log(err);
       reject(err);
     });
 
     myReadStream.on("end", function() {
       //Calling the getHash() function to get the hash
       const content = getHash(rContents);
-      console.log("Hash : " + content);
-      resolve();
+      resolve(content);
     });
   });
-
-  // exec("sed -i '71s/.*/<?php wp_head() ?>/' index.php &&");
 }
 
 //Get and array of all the files contined in the _next/ folder
@@ -54,6 +57,16 @@ async function getFiles(dir) {
     })
   );
   return Array.prototype.concat(...files);
+}
+
+//Write the version based on the dynamic cache hash
+async function writeNewServiceWorkerVersion(fileHash) {
+  console.log("Writing new SW version...");
+  const result = await readFile(SW_FILE, "utf8");
+  const regex = new RegExp("^" + "const SW_VERSION" + ".*$", "gm");
+  const versionedSW = result.replace(regex, `const SW_VERSION = "${fileHash}"`);
+
+  await writeFile(SW_FILE, versionedSW);
 }
 
 //Write the all the files path into sw-dynamic-asset.js
@@ -69,7 +82,10 @@ getFiles(BASE_URL)
 
     await writeFile(DEST_FILE, "");
     await appendFile(DEST_FILE, `const dynamicAssets = [${assetsPathArray}]`);
-    await generateServiceWorkerVersion();
+    const fileHash = await generateServiceWorkerVersion();
+    await writeNewServiceWorkerVersion(fileHash);
+
+    console.log("Hash : " + fileHash);
   })
   .catch(err => {
     console.log(err);

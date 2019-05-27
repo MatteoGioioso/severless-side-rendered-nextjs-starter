@@ -1,7 +1,6 @@
 importScripts("sw-dynamic-assets.js");
 
-//Keep this constant at line 4
-const SW_VERSION = ''
+const SW_VERSION = "6f6bfcca10bcb25341d24088762bd7cb";
 
 const STATIC_CACHE = "static-cache";
 const appShellFiles = [
@@ -42,7 +41,6 @@ self.addEventListener("activate", event => {
 });
 
 self.addEventListener("fetch", event => {
-  // console.log(event.request.url);
   event.respondWith(
     caches.match(event.request).then(response => {
       if (response) {
