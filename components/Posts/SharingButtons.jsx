@@ -1,5 +1,6 @@
 import React from "react";
 import { colors } from "../Styled/vars";
+import styled, { css } from "styled-components";
 import {
   FacebookShareButton,
   LinkedinShareButton,
@@ -18,11 +19,38 @@ import {
   EmailIcon
 } from "react-share";
 
+const iconStyle = css`
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+  &:hover {
+    transform: scale(0.75);
+  }
+`;
+
+const FacebookIconStyled = styled(FacebookIcon)`
+  ${iconStyle}
+`;
+const TwitterIconStyled = styled(TwitterIcon)`
+  ${iconStyle}
+`;
+const RedditIconStyled = styled(RedditIcon)`
+  ${iconStyle}
+`;
+const LinkedinIconStyled = styled(LinkedinIcon)`
+  ${iconStyle}
+`;
+const WhatsappIconStyled = styled(WhatsappIcon)`
+  ${iconStyle}
+`;
+const EmailIconStyled = styled(EmailIcon)`
+  ${iconStyle}
+`;
+
 const SharingButtons = ({ url }) => {
   return (
     <>
       <FacebookShareButton url={url}>
-        <FacebookIcon
+        <FacebookIconStyled
           size={40}
           iconBgStyle={{ fill: colors.whitebg }}
           logoFillColor={"rgba(0,0,0,.76)"}
@@ -30,7 +58,7 @@ const SharingButtons = ({ url }) => {
       </FacebookShareButton>
 
       <RedditShareButton url={url}>
-        <RedditIcon
+        <RedditIconStyled
           size={40}
           iconBgStyle={{ fill: colors.whitebg }}
           logoFillColor={"rgba(0,0,0,.76)"}
@@ -38,7 +66,7 @@ const SharingButtons = ({ url }) => {
       </RedditShareButton>
 
       <TwitterShareButton url={url}>
-        <TwitterIcon
+        <TwitterIconStyled
           size={40}
           iconBgStyle={{ fill: colors.whitebg }}
           logoFillColor={"rgba(0,0,0,.76)"}
@@ -46,7 +74,7 @@ const SharingButtons = ({ url }) => {
       </TwitterShareButton>
 
       <LinkedinShareButton url={url}>
-        <LinkedinIcon
+        <LinkedinIconStyled
           size={40}
           iconBgStyle={{ fill: colors.whitebg }}
           logoFillColor={"rgba(0,0,0,.76)"}
@@ -54,7 +82,7 @@ const SharingButtons = ({ url }) => {
       </LinkedinShareButton>
 
       <WhatsappShareButton url={url}>
-        <WhatsappIcon
+        <WhatsappIconStyled
           size={40}
           iconBgStyle={{ fill: colors.whitebg }}
           logoFillColor={"rgba(0,0,0,.76)"}
@@ -62,7 +90,7 @@ const SharingButtons = ({ url }) => {
       </WhatsappShareButton>
 
       <EmailShareButton url={url}>
-        <EmailIcon
+        <EmailIconStyled
           size={40}
           iconBgStyle={{ fill: colors.whitebg }}
           logoFillColor={"rgba(0,0,0,.76)"}
@@ -72,4 +100,4 @@ const SharingButtons = ({ url }) => {
   );
 };
 
-export default SharingButtons
+export default SharingButtons;

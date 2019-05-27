@@ -1,5 +1,8 @@
 importScripts("sw-dynamic-assets.js");
 
+//Keep this constant at line 4
+const SW_VERSION = ''
+
 const STATIC_CACHE = "static-cache";
 const appShellFiles = [
   "/",
@@ -22,25 +25,19 @@ self.addEventListener("install", event => {
   console.log("Installing service worker");
 
   event.waitUntil(
-    caches.open(STATIC_CACHE).then(cache => {
-      console.log(dynamicAssets)
-      console.log("Precaching");
-      cache
-        .addAll([...appShellFiles, ...dynamicAssets])
-        .then(() => console.log("cached"));
+    caches.delete(STATIC_CACHE).then(() => {
+      caches.open(STATIC_CACHE).then(cache => {
+        cache
+          .addAll([...appShellFiles, ...dynamicAssets])
+          .then(() => console.log("cached"));
+      });
     })
   );
 });
 
 self.addEventListener("activate", event => {
-  console.log("Register service worker");
+  console.log("Activate service worker");
 
-  //TODO: test this again
-  event.waitUntil(
-    caches.delete(STATIC_CACHE).then(() => {
-      console.log("cache purged");
-    })
-  );
   return self.clients.claim();
 });
 

@@ -1,38 +1,76 @@
 const fs = require("fs");
 const BASE_URL = "./public/_next/static";
 const DEST_FILE = "./public/sw-dynamic-assets.js";
-const events = require("events");
-const fileEvent = new events.EventEmitter();
-let assetsArray = [];
+const { resolve } = require("path");
+const { readdir, stat, writeFile, appendFile } = require("fs").promises;
+const exec = require("child_process").exec;
+const crypto = require("crypto");
 
-fs.readdir(BASE_URL, (err, folders) => {
-  folders.forEach(subFolder => {
-    fs.readdir(`${BASE_URL}/${subFolder}`, (err, files) => {
-      files.forEach(file => {
-        if (file === "pages") {
-          fs.readdir(`${BASE_URL}/${subFolder}/${file}`, (err, files) => {
-            files.forEach((subFile, i) => {
-              assetsArray.push(`"${BASE_URL}/${subFolder}/${file}/${subFile}"`.replace("./public", ""));
-              if (i === files.length - 1) {
-                fileEvent.emit("file-finished");
-              }
-            });
-          });
-        } else {
-          assetsArray.push(`"${BASE_URL}/${subFolder}/${file}"`.replace("./public", ""));
-        }
-      });
+const getHash = content => {
+  const hash = crypto.createHash("md5");
+  //passing the data to be hashed
+  data = hash.update(content, "utf-8");
+  //Creating the hash in the required format
+  gen_hash = data.digest("hex");
+  return gen_hash;
+};
+
+async function generateServiceWorkerVersion() {
+  console.log("hashing file...");
+
+  return new Promise((resolve, reject) => {
+    //Creating a readstream to read the file
+    const myReadStream = fs.createReadStream(DEST_FILE);
+
+    let rContents = ""; // to hold the read contents;
+
+    myReadStream.on("data", function(chunk) {
+      rContents += chunk;
+    });
+
+    myReadStream.on("error", function(err) {
+      console.log(err);
+      reject(err);
+    });
+
+    myReadStream.on("end", function() {
+      //Calling the getHash() function to get the hash
+      const content = getHash(rContents);
+      console.log("Hash : " + content);
+      resolve();
     });
   });
-});
 
-fileEvent.on("file-finished", () => {
-  console.log(assetsArray);
-  fs.writeFile(DEST_FILE, "", () => {
-    fs.appendFile(DEST_FILE, `const dynamicAssets = [${assetsArray}]`, err => {
-      if (err) {
-        console.log(err);
-      }
-    });
+  // exec("sed -i '71s/.*/<?php wp_head() ?>/' index.php &&");
+}
+
+//Get and array of all the files contined in the _next/ folder
+async function getFiles(dir) {
+  const subdirs = await readdir(dir);
+  const files = await Promise.all(
+    subdirs.map(async subdir => {
+      const res = resolve(dir, subdir);
+      return (await stat(res)).isDirectory() ? getFiles(res) : res;
+    })
+  );
+  return Array.prototype.concat(...files);
+}
+
+//Write the all the files path into sw-dynamic-asset.js
+getFiles(BASE_URL)
+  .then(async fileaPaths => {
+    const assetsPathArray = fileaPaths
+      .map(filePath =>
+        filePath.replace("/home/madeo/Projects/hirviblog/public", "")
+      )
+      .map(filePath => `"${filePath}"`);
+
+    console.log(assetsPathArray);
+
+    await writeFile(DEST_FILE, "");
+    await appendFile(DEST_FILE, `const dynamicAssets = [${assetsPathArray}]`);
+    await generateServiceWorkerVersion();
+  })
+  .catch(err => {
+    console.log(err);
   });
-});
