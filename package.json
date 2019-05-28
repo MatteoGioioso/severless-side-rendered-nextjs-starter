@@ -38,6 +38,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-ga": "^2.5.7",
+    "react-loading-skeleton": "^1.1.2",
     "react-share": "^3.0.0",
     "sass-loader": "^7.1.0",
     "styled-components": "^4.2.0"

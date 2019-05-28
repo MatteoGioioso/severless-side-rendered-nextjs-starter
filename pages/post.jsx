@@ -123,7 +123,7 @@ class Post extends React.Component {
         />
 
         <div id="main" className="alt">
-          <section id="one">
+          <section id="one" className="post-content-container">
             <Observer {...options}>
               <div data-name="articleStart" />
             </Observer>

@@ -7,16 +7,53 @@ import { colors } from "../components/Styled/vars";
 import { contentfulClient } from "../services/Contentful";
 import { registerServiceWorker } from "../services/helpers";
 import { initGA, logPageView } from "../services/GoogleAnalytics";
+import dynamic from "next/dynamic";
 
 class Index extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      posts: [],
+      isLoading: false
+    };
+    this.Skeleton = null;
+    this.SkeletonTheme = null;
+    this.getPosts = this.getPosts.bind(this);
+  }
+
+  async getPosts() {
+    this.setState({ isLoading: true });
+    const data = await contentfulClient.getEntries({
+      content_type: "post",
+      limit: 4
+    });
+
+    const posts = data.items.map(post => ({
+      ...post.fields,
+      id: post.sys.id,
+      createdAt: post.sys.createdAt
+    }));
+
+    this.setState({ posts, isLoading: true });
+  }
+
   componentDidMount() {
     registerServiceWorker();
+
+    this.Skeleton = dynamic(() => import("react-loading-skeleton"));
+
+    this.SkeletonTheme = dynamic(() =>
+      import("react-loading-skeleton").then(mod => mod.SkeletonTheme)
+    );
+
     initGA();
     logPageView();
+    this.getPosts();
   }
 
   render() {
-    const { posts } = this.props;
+    const { posts, isLoading } = this.state;
 
     return (
       <Layout>
@@ -25,10 +62,23 @@ class Index extends React.Component {
           <BannerLanding />
 
           <div id="main">
-            <section id="two" className="spotlights">
+            <section id="two" className="spotlights posts-thumbnail-container">
               {posts.map(post => (
                 <Post key={post.id} {...post} imageUrl={post.imagesUrls[0]} />
               ))}
+              {isLoading && (
+                <div
+                  style={{
+                    maxWidth: "850px",
+                    margin: "auto",
+                    paddingBottom: "2%"
+                  }}
+                >
+                  <this.SkeletonTheme color={colors.skeleton} highlightColor={colors.skeletonHighlight}>
+                    <this.Skeleton count={1} height={150} />
+                  </this.SkeletonTheme>
+                </div>
+              )}
             </section>
           </div>
         </div>
@@ -37,21 +87,21 @@ class Index extends React.Component {
   }
 }
 
-Index.getInitialProps = async ({ req }) => {
-  const data = await contentfulClient.getEntries({
-    content_type: "post",
-    limit: 4
-  });
+// Index.getInitialProps = async ({ req }) => {
+//   // const data = await contentfulClient.getEntries({
+//   //   content_type: "post",
+//   //   limit: 4
+//   // });
 
-  const posts = data.items.map(post => ({
-    ...post.fields,
-    id: post.sys.id,
-    createdAt: post.sys.createdAt
-  }));
+//   // const posts = data.items.map(post => ({
+//   //   ...post.fields,
+//   //   id: post.sys.id,
+//   //   createdAt: post.sys.createdAt
+//   // }));
 
-  return {
-    posts
-  };
-};
+//   return {
+//     // posts
+//   };
+// };
 
 export default Index;

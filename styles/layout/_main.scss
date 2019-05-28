@@ -2,8 +2,6 @@
 
 #main {
   background-color: _palette(white-bg);
-  padding-left: 22vw;
-  padding-right: 22vw;
 
   > * {
     border-top: solid 1px _palette(border);
@@ -20,34 +18,20 @@
     border-bottom: solid 1px _palette(border);
   }
 
-  @include breakpoint(large) {
-    padding-left: 18vw;
-    padding-right: 18vw;
+  .post-content-container {
+    max-width: 800px;
+    margin: auto;
   }
 
-  @include breakpoint(large) {
-    padding-left: 14vw;
-    padding-right: 14vw;
-  }
-
-  @include breakpoint(medium) {
-    padding-left: 8vw;
-    padding-right: 8vw;
-  }
-
-  @include breakpoint(small) {
-    padding-left: 2vw;
-    padding-right: 2vw;
+  .posts-thumbnail-container {
+    max-width: 900px;
+    margin: auto;
+    min-height: 500px;
   }
 }
 
 .post-title-container {
-  padding-left: 18vw;
-  padding-right: 18vw;
+  max-width: 900px;
+  margin: auto;
   padding-top: 5%;
-
-  @include breakpoint(small) {
-    padding-left: 2vw;
-    padding-right: 2vw;
-  }
 }

@@ -19,5 +19,7 @@ export const colors = {
   other2: "#3c5a4d",
   other3: "#223b30",
   other4: "#153426",
-  other5: "#092719"
+  other5: "#092719",
+  skeleton: "rgba(212, 212, 255, 0.9)",
+  skeletonHighlight: "#eae5df"
 };

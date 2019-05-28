@@ -5,8 +5,8 @@ import { withRouter } from "next/router";
 
 const SectionContainer = styled.section`
   cursor: pointer;
-  margin: 8%;
-  border: 1px solid ${colors.fglighter};
+  margin: 3%;
+  /* border: 1px solid ${colors.whitebg_2}; */
   background-color: ${colors.whitebg} !important;
   transition: all 200ms ease-in-out;
   &:hover {
