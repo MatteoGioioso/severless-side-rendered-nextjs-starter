@@ -2,8 +2,8 @@ import {colors} from "./Styled/vars";
 
 const HirvitekHead = props => {
   const styles = {
-    stroke: colors.whitebg,
-    fill: colors.whitebg
+    stroke: props.color || colors.whitebg,
+    fill: props.color || colors.whitebg
   };
 
   return (

@@ -35,7 +35,9 @@ class Index extends React.Component {
       createdAt: post.sys.createdAt
     }));
 
-    this.setState({ posts, isLoading: true });
+   setTimeout(() => {
+    this.setState({ posts, isLoading: false });
+   }, 1000);
   }
 
   componentDidMount() {
@@ -67,17 +69,33 @@ class Index extends React.Component {
                 <Post key={post.id} {...post} imageUrl={post.imagesUrls[0]} />
               ))}
               {isLoading && (
-                <div
-                  style={{
-                    maxWidth: "850px",
-                    margin: "auto",
-                    paddingBottom: "2%"
-                  }}
+                <this.SkeletonTheme
+                  color={colors.skeleton}
+                  highlightColor={colors.skeletonHighlight}
                 >
-                  <this.SkeletonTheme color={colors.skeleton} highlightColor={colors.skeletonHighlight}>
+                  <div
+                    style={{
+                      maxWidth: "850px",
+                      margin: "auto",
+                      paddingTop: "5%",
+                      paddingBottom: "5%"
+                    }}
+                  >
+                    <this.Skeleton count={2} />
                     <this.Skeleton count={1} height={150} />
-                  </this.SkeletonTheme>
-                </div>
+                  </div>
+
+                  <div
+                    style={{
+                      maxWidth: "850px",
+                      margin: "auto",
+                      paddingBottom: "5%"
+                    }}
+                  >
+                    <this.Skeleton count={2} />
+                    <this.Skeleton count={1} height={150} />
+                  </div>
+                </this.SkeletonTheme>
               )}
             </section>
           </div>
