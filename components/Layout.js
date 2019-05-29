@@ -3,6 +3,7 @@ import Header from "./Header";
 import Menu from "./Menu";
 import Footer from "./Footer";
 import React from "react";
+import { Notification } from "react-notification";
 
 class Layout extends React.Component {
   constructor(props) {
@@ -47,6 +48,13 @@ class Layout extends React.Component {
           <Footer />
         </div>
         <Menu onToggleMenu={this.handleToggleMenu} />
+
+        <Notification
+          isActive={this.props.isNotificationOpen}
+          message="A new update is available"
+          action="Click to reload"
+          onClick={this.props.handleNotificationClick}
+        />
       </div>
     );
   }

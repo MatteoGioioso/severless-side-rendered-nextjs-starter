@@ -3,7 +3,11 @@ import { contentfulClient } from "../services/Contentful";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import SEO from "../components/SEO";
 import React from "react";
-import { registerServiceWorker, isMobile } from "../services/helpers";
+import {
+  registerServiceWorker,
+  isMobile,
+  checkForServiceWorkerUpdate
+} from "../services/helpers";
 import ShareWidget from "../components/Posts/ShareWidget";
 import styled from "styled-components";
 import BottomSharedWidget from "../components/Posts/BottomShareWidget";
@@ -28,6 +32,11 @@ class Post extends React.Component {
 
     this.displayDate = this.displayDate.bind(this);
     this.handleIntersection = this.handleIntersection.bind(this);
+    this.handleNotificationClick = this.handleNotificationClick.bind(this);
+  }
+
+  handleNotificationClick() {
+    this.worker.postMessage({ action: "skipWaiting" });
   }
 
   handleIntersection(event) {
@@ -36,7 +45,17 @@ class Post extends React.Component {
   }
 
   componentDidMount() {
-    registerServiceWorker();
+    registerServiceWorker(reg => {
+      reg.addEventListener(
+        "updatefound",
+        checkForServiceWorkerUpdate(this, reg)
+      );
+    });
+
+    navigator.serviceWorker.addEventListener("controllerchange", function() {
+      window.location.reload();
+    });
+
     initGA();
     logPageView();
     this.setState({ isMobile: isMobile() });
@@ -65,7 +84,10 @@ class Post extends React.Component {
     };
 
     return (
-      <Layout>
+      <Layout
+        isNotificationOpen={this.state.isNotificationOpen}
+        handleNotificationClick={this.handleNotificationClick}
+      >
         <SEO
           seoConfig={{
             title: post.title,

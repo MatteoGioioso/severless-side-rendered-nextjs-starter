@@ -1,7 +1,8 @@
-export function registerServiceWorker() {
+export function registerServiceWorker(callback) {
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker
       .register("/sw.js")
+      .then(reg => callback(reg))
       .catch(err => console.error("Service worker registration failed", err));
   } else {
     console.log("Service worker not supported");
@@ -22,4 +23,19 @@ export function isMobile() {
       check = true;
   })(navigator.userAgent || navigator.vendor || window.opera);
   return check;
+}
+
+export function checkForServiceWorkerUpdate(_self, reg) {
+  return () => {
+    _self.worker = reg.installing;
+
+    _self.worker.addEventListener("statechange", () => {
+      if (
+        _self.worker.state === "installed" &&
+        navigator.serviceWorker.controller
+      ) {
+        _self.setState({ isNotificationOpen: true });
+      }
+    });
+  };
 }

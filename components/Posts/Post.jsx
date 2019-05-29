@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { colors } from "../Styled/vars";
 import styled from "styled-components";
 import { withRouter } from "next/router";
-import HirvitekHead from "../HirvitekHead";
+import { PostPageLoading } from "./Loaders";
 
 const SectionContainer = styled.section`
   cursor: pointer;
@@ -96,33 +96,7 @@ const Post = ({
           </div>
         </div>
       </SectionContainer>
-      {isLoading && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: colors.bg,
-            zIndex: "1"
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              height: "100vh",
-              justifyContent: "center",
-              alignContent: "center",
-              alignItems: "center"
-            }}
-          >
-            <h1 style={{ color: colors.bgalt, fontSize: "18px" }}>
-              Loading...
-            </h1>
-          </div>
-        </div>
-      )}
+      {isLoading && <PostPageLoading />}
     </>
   );
 };

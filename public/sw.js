@@ -1,6 +1,6 @@
 importScripts("sw-dynamic-assets.js");
 
-const SW_VERSION = "6f6bfcca10bcb25341d24088762bd7cb";
+const SW_VERSION = "1fa304c836c12c11e2b1dd82ba61fc75";
 
 const STATIC_CACHE = "static-cache";
 const appShellFiles = [
@@ -25,10 +25,11 @@ self.addEventListener("install", event => {
 
   event.waitUntil(
     caches.delete(STATIC_CACHE).then(() => {
+      console.log("purging cache");
       caches.open(STATIC_CACHE).then(cache => {
         cache
           .addAll([...appShellFiles, ...dynamicAssets])
-          .then(() => console.log("cached"));
+          .then(() => console.log("cached new static assets"));
       });
     })
   );
@@ -41,6 +42,12 @@ self.addEventListener("activate", event => {
 });
 
 self.addEventListener("fetch", event => {
+
+  console.log(event.request.url);
+  // if (requestURL.pathname.indexOf("post") > -1) {
+  
+  // }
+
   event.respondWith(
     caches.match(event.request).then(response => {
       if (response) {
@@ -50,4 +57,10 @@ self.addEventListener("fetch", event => {
       }
     })
   );
+});
+
+self.addEventListener("message", function(event) {
+  if (event.data.action === "skipWaiting") {
+    self.skipWaiting();
+  }
 });
