@@ -44,6 +44,13 @@ class Post extends React.Component {
     this.setState({ [name]: event.isIntersecting });
   }
 
+  //Dynamic SSR html caching
+  cachePost() {
+    caches.open("static-cache").then(cache => {
+      cache.addAll([`/post/${this.props.postId}`]);
+    });
+  }
+
   componentDidMount() {
     registerServiceWorker(reg => {
       reg.addEventListener(
@@ -59,6 +66,8 @@ class Post extends React.Component {
     initGA();
     logPageView();
     this.setState({ isMobile: isMobile() });
+
+    this.cachePost();
   }
 
   displayDate() {
