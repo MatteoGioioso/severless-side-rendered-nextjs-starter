@@ -5,11 +5,6 @@ import Post from "../components/Posts/Post";
 import React from "react";
 import { colors } from "../components/Styled/vars";
 import { contentfulClient } from "../services/Contentful";
-import {
-  registerServiceWorker,
-  checkForServiceWorkerUpdate
-} from "../services/helpers";
-import { initGA, logPageView } from "../services/GoogleAnalytics";
 import dynamic from "next/dynamic";
 import { PostSkeleton } from "../components/Posts/Loaders";
 
@@ -19,17 +14,14 @@ class Index extends React.Component {
 
     this.state = {
       posts: [],
-      isLoading: false,
-      isNotificationOpen: false
+      isLoading: false
     };
 
     this.Skeleton = null;
     this.SkeletonTheme = null;
-    this.worker = null;
 
     this.getPosts = this.getPosts.bind(this);
-    this.handleNotificationClick = this.handleNotificationClick.bind(this);
-    this.importDyanamicComponents = this.importDyanamicComponents.bind(this);
+    this.importDyanamicComponent;
   }
 
   importDyanamicComponents() {
@@ -38,10 +30,6 @@ class Index extends React.Component {
     this.SkeletonTheme = dynamic(() =>
       import("react-loading-skeleton").then(mod => mod.SkeletonTheme)
     );
-  }
-
-  handleNotificationClick() {
-    this.worker.postMessage({ action: "skipWaiting" });
   }
 
   async getPosts() {
@@ -63,31 +51,15 @@ class Index extends React.Component {
   }
 
   componentDidMount() {
-    registerServiceWorker(reg => {
-      reg.addEventListener(
-        "updatefound",
-        checkForServiceWorkerUpdate(this, reg)
-      );
-    });
-
-    navigator.serviceWorker.addEventListener("controllerchange", function() {
-      window.location.reload();
-    });
-
     this.importDyanamicComponents();
-    initGA();
-    logPageView();
     this.getPosts();
   }
 
   render() {
-    const { posts, isLoading, isNotificationOpen } = this.state;
+    const { posts, isLoading } = this.state;
 
     return (
-      <Layout
-        isNotificationOpen={this.state.isNotificationOpen}
-        handleNotificationClick={this.handleNotificationClick}
-      >
+      <Layout>
         <SEO />
         <div style={{ backgroundColor: colors.whitebg }}>
           <BannerLanding />

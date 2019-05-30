@@ -3,15 +3,10 @@ import { contentfulClient } from "../services/Contentful";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import SEO from "../components/SEO";
 import React from "react";
-import {
-  registerServiceWorker,
-  isMobile,
-  checkForServiceWorkerUpdate
-} from "../services/helpers";
+import { isMobile } from "../services/helpers";
 import ShareWidget from "../components/Posts/ShareWidget";
 import styled from "styled-components";
 import BottomSharedWidget from "../components/Posts/BottomShareWidget";
-import { initGA, logPageView } from "../services/GoogleAnalytics";
 import Observer from "@researchgate/react-intersection-observer";
 
 const PostTitleContainer = styled.div`
@@ -32,11 +27,6 @@ class Post extends React.Component {
 
     this.displayDate = this.displayDate.bind(this);
     this.handleIntersection = this.handleIntersection.bind(this);
-    this.handleNotificationClick = this.handleNotificationClick.bind(this);
-  }
-
-  handleNotificationClick() {
-    this.worker.postMessage({ action: "skipWaiting" });
   }
 
   handleIntersection(event) {
@@ -52,21 +42,7 @@ class Post extends React.Component {
   }
 
   componentDidMount() {
-    registerServiceWorker(reg => {
-      reg.addEventListener(
-        "updatefound",
-        checkForServiceWorkerUpdate(this, reg)
-      );
-    });
-
-    navigator.serviceWorker.addEventListener("controllerchange", function() {
-      window.location.reload();
-    });
-
-    initGA();
-    logPageView();
     this.setState({ isMobile: isMobile() });
-
     this.cachePost();
   }
 
@@ -93,10 +69,7 @@ class Post extends React.Component {
     };
 
     return (
-      <Layout
-        isNotificationOpen={this.state.isNotificationOpen}
-        handleNotificationClick={this.handleNotificationClick}
-      >
+      <Layout>
         <SEO
           seoConfig={{
             title: post.title,

@@ -53,14 +53,16 @@ const Post = ({
     <>
       <SectionContainer
         onClick={() => {
-          setIsLoading(true);
-          setTimeout(
-            () => router.push(`/post?postId=${postId}`, `/post/${postId}`),
-            100
-          );
+          if (navigator.onLine) {
+            setIsLoading(true);
+            setTimeout(
+              () => router.push(`/post?postId=${postId}`, `/post/${postId}`),
+              100
+            );
+          }
         }}
       >
-        <a className="image">
+        <a className="image" href={`/post/${postId}`}>
           <img src={imageUrl} alt="" />
         </a>
 

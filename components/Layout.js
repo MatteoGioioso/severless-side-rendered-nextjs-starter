@@ -4,21 +4,47 @@ import Menu from "./Menu";
 import Footer from "./Footer";
 import React from "react";
 import { Notification } from "react-notification";
+import { initGA, logPageView } from "../services/GoogleAnalytics";
+import {
+  registerServiceWorker,
+  checkForServiceWorkerUpdate
+} from "../services/helpers";
+import { colors } from "./Styled/vars";
 
 class Layout extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       isMenuVisible: false,
-      loading: "is-loading"
+      loading: "is-loading",
+      isNotificationOpen: false
     };
+
+    this.worker = null;
+
     this.handleToggleMenu = this.handleToggleMenu.bind(this);
+    this.handleNotificationClick = this.handleNotificationClick.bind(this);
   }
 
   componentDidMount() {
     this.timeoutId = setTimeout(() => {
       this.setState({ loading: "" });
     }, 100);
+
+    registerServiceWorker(reg => {
+      reg.addEventListener(
+        "updatefound",
+        checkForServiceWorkerUpdate(this, reg)
+      );
+    });
+
+    navigator.serviceWorker.addEventListener("controllerchange", function() {
+      window.location.reload();
+    });
+
+    initGA();
+    logPageView();
   }
 
   componentWillUnmount() {
@@ -31,6 +57,12 @@ class Layout extends React.Component {
     this.setState({
       isMenuVisible: !this.state.isMenuVisible
     });
+  }
+
+  handleNotificationClick() {
+    if(this.worker){
+      this.worker.postMessage({ action: "skipWaiting" });
+    }
   }
 
   render() {
@@ -49,11 +81,17 @@ class Layout extends React.Component {
         </div>
         <Menu onToggleMenu={this.handleToggleMenu} />
 
+        {/* Display if app has been updated*/}
         <Notification
-          isActive={this.props.isNotificationOpen}
+          isActive={this.state.isNotificationOpen}
           message="A new update is available"
           action="Click to reload"
-          onClick={this.props.handleNotificationClick}
+          onClick={this.handleNotificationClick}
+          style={{
+            background: colors.accent1,
+            color: colors.whitebg
+          }}
+          actionStyle={{ color: colors.other1 }}
         />
       </div>
     );
@@ -61,3 +99,4 @@ class Layout extends React.Component {
 }
 
 export default Layout;
+  
