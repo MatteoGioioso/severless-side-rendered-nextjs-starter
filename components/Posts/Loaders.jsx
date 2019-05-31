@@ -1,34 +1,31 @@
 import React from "react";
 import { colors } from "../Styled/vars";
+import styled from "styled-components";
+
+const SkeletonContainer = styled.div`
+  max-width: 850px;
+  margin: auto;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  padding-left: 3%;
+  padding-right: 3%;
+`;
 
 export const PostSkeleton = ({ SkeletonTheme, Skeleton }) => {
   return (
     <SkeletonTheme
-      color={colors.skeleton}
-      highlightColor={colors.skeletonHighlight}
+      // color={colors.skeleton}
+      // highlightColor={colors.skeletonHighlight}
     >
-      <div
-        style={{
-          maxWidth: "850px",
-          margin: "auto",
-          paddingTop: "5%",
-          paddingBottom: "5%"
-        }}
-      >
+      <SkeletonContainer>
         <Skeleton count={2} />
         <Skeleton count={1} height={150} />
-      </div>
+      </SkeletonContainer>
 
-      <div
-        style={{
-          maxWidth: "850px",
-          margin: "auto",
-          paddingBottom: "5%"
-        }}
-      >
+      <SkeletonContainer>
         <Skeleton count={2} />
         <Skeleton count={1} height={150} />
-      </div>
+      </SkeletonContainer>
     </SkeletonTheme>
   );
 };

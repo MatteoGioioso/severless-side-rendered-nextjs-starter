@@ -12,7 +12,8 @@ import Observer from "@researchgate/react-intersection-observer";
 const PostTitleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 90%;
+  padding: 2%;
 `;
 
 class Post extends React.Component {

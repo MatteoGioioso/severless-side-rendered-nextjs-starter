@@ -18,6 +18,11 @@
   }
   p {
     font-size: 19.5px;
+    word-wrap: break-word;
     // line-height: 20px;
+  }
+
+  code{
+    word-wrap: break-word;
   }
 }
