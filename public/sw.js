@@ -1,6 +1,6 @@
 importScripts("sw-dynamic-assets.js");
 
-const SW_VERSION = "6e6b87cb50564d7ab59cf3681b390949"
+const SW_VERSION = "e563a3764cc61fe1c2813be284c4600b"
 
 const STATIC_CACHE = "static-cache";
 const appShellFiles = [

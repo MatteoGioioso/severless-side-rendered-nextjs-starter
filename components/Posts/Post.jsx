@@ -49,20 +49,27 @@ const Post = ({
     router.prefetch(`/post`);
   });
 
+  function handleClickPost() {
+    //when offline we nee to navigate
+    if (navigator.onLine) {
+      setIsLoading(true);
+      setTimeout(
+        () => router.push(`/post?postId=${postId}`, `/post/${postId}`),
+        100
+      );
+    } else {
+      const offlineLink = document.createElement("a");
+      offlineLink.href = `/post/${postId}`;
+      document.body.appendChild(offlineLink);
+      offlineLink.click();
+      document.body.removeChild(offlineLink);
+    }
+  }
+
   return (
     <>
-      <SectionContainer
-        onClick={() => {
-          if (navigator.onLine) {
-            setIsLoading(true);
-            setTimeout(
-              () => router.push(`/post?postId=${postId}`, `/post/${postId}`),
-              100
-            );
-          }
-        }}
-      >
-        <a className="image" href={`/post/${postId}`}>
+      <SectionContainer onClick={handleClickPost}>
+        <a className="image">
           <img src={imageUrl} alt="" />
         </a>
 
