@@ -1,5 +1,21 @@
 import Link from "next/link";
 import React, { useState } from "react";
+import styled from "styled-components";
+import { colors } from "./Styled/vars";
+
+const ListLink = styled.li`
+  cursor: pointer;
+  transition: all 800ms ease-in-out;
+
+  &:hover {
+    background: ${colors.bgalt};
+  }
+
+  &:hover span {
+    transition: all 800ms ease-in-out;
+    color: ${colors.menubg};
+  }
+`;
 
 const Menu = props => {
   const [aboutModal, setAboutModal] = useState(false);
@@ -9,26 +25,26 @@ const Menu = props => {
     <nav id="menu">
       <div className="inner">
         <ul className="links">
-          <li>
+          <ListLink onClick={props.onToggleMenu}>
             <Link href="/">
               <a>
-                <span onClick={props.onToggleMenu}>Home</span>
+                <span>Home</span>
               </a>
             </Link>
-          </li>
-          <li>
+          </ListLink>
+          <ListLink onClick={() => setAboutModal(true)}>
             <a>
-              <span onClick={() => setAboutModal(true)}>About</span>
+              <span>About</span>
             </a>
-          </li>
+          </ListLink>
 
-          <li>
+          <ListLink onClick={() => setContactModal(true)}>
             <a>
-              <span onClick={() => setContactModal(true)}>Contact</span>
+              <span>Contact</span>
             </a>
-          </li>
+          </ListLink>
 
-          <li>
+          <ListLink>
             <a
               href="https://hirvitek.com"
               target="_blank"
@@ -36,7 +52,7 @@ const Menu = props => {
             >
               <span onClick={props.onToggleMenu}>Hirvitek site</span>
             </a>
-          </li>
+          </ListLink>
         </ul>
         {/*<ul className="actions vertical">*/}
         {/*    <li><a href="#" className="button special fit">Get Started</a></li>*/}
@@ -84,7 +100,10 @@ const Contact = ({ setContactModal }) => {
         className="inner"
         style={{ textAlign: "left", minWidth: "310px", width: "50%" }}
       >
-        <h3>You can drop us an email at: <a href="mailto:info@hirvitek.com">info@hirvitek.com</a></h3>
+        <h3>
+          You can drop us an email at:{" "}
+          <a href="mailto:info@hirvitek.com">info@hirvitek.com</a>
+        </h3>
         <p>We will make a nice form later</p>
         {/*<form method="post" action="#">*/}
         {/*  <div className="field half first">*/}
