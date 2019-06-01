@@ -39,9 +39,11 @@ class Layout extends React.Component {
       );
     });
 
-    navigator.serviceWorker.addEventListener("controllerchange", function() {
-      window.location.reload();
-    });
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.addEventListener("controllerchange", function() {
+        window.location.reload();
+      });
+    }
 
     initGA();
     logPageView();
@@ -60,7 +62,7 @@ class Layout extends React.Component {
   }
 
   handleNotificationClick() {
-    if(this.worker){
+    if (this.worker) {
       this.worker.postMessage({ action: "skipWaiting" });
     }
   }
@@ -99,4 +101,3 @@ class Layout extends React.Component {
 }
 
 export default Layout;
-  

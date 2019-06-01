@@ -36,10 +36,14 @@ class Post extends React.Component {
   }
 
   //Dynamic SSR html caching
+
   cachePost() {
-    caches.open("static-cache").then(cache => {
-      cache.addAll([`/post/${this.props.postId}`]);
-    });
+    if ("caches" in window) {
+      console.log('caches')
+      caches.open("static-cache").then(cache => {
+        cache.addAll([`/post/${this.props.postId}`]);
+      });
+    }
   }
 
   componentDidMount() {
