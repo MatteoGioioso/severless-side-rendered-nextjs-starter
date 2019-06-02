@@ -1,7 +1,7 @@
 importScripts("sw-dynamic-assets.js");
 importScripts("idb.js");
 
-const SW_VERSION = "6622670ea31593daca235feab6a330fc";
+const SW_VERSION = "c3e1b809e59cca4eb333b0e3dd27f2d7";
 
 const STATIC_CACHE = "static-cache";
 const CACHE_MAX_AGE_DAYS = 7;
@@ -26,14 +26,16 @@ const appShellFiles = [
   "/static/manifest.json"
 ];
 
-const DB = idb.open("json-cache", 1, function(db) {
-  if (!db.objectStoreNames.contains("posts")) {
-    db.createObjectStore("posts", { keyPath: "requestUrl" });
-  }
-});
+function DB() {
+  return idb.open("json-cache", 1, function(db) {
+    if (!db.objectStoreNames.contains("posts")) {
+      db.createObjectStore("posts", { keyPath: "requestUrl" });
+    }
+  });
+}
 
 function writeData(st, data) {
-  return DB.then(function(db) {
+  return DB().then(function(db) {
     const tx = db.transaction(st, "readwrite");
     const store = tx.objectStore(st);
     store.put(data);
@@ -42,7 +44,7 @@ function writeData(st, data) {
 }
 
 function readAllData(st) {
-  return DB.then(function(db) {
+  return DB().then(function(db) {
     const tx = db.transaction(st, "readonly");
     const store = tx.objectStore(st);
     return store.getAll();
@@ -50,7 +52,7 @@ function readAllData(st) {
 }
 
 function clearAllData(st) {
-  return DB.then(function(db) {
+  return DB().then(function(db) {
     const tx = db.transaction(st, "readwrite");
     const store = tx.objectStore(st);
     store.clear();
@@ -59,14 +61,20 @@ function clearAllData(st) {
 }
 
 function deleteItemFromData(st, id) {
-  DB.then(function(db) {
-    const tx = db.transaction(st, "readwrite");
-    const store = tx.objectStore(st);
-    store.delete(id);
-    return tx.complete;
-  }).then(function() {
-    console.log("Item deleted!");
-  });
+  DB()
+    .then(function(db) {
+      const tx = db.transaction(st, "readwrite");
+      const store = tx.objectStore(st);
+      store.delete(id);
+      return tx.complete;
+    })
+    .then(function() {
+      console.log("Item deleted!");
+    });
+}
+
+function matchUrl(url, lists) {
+  return lists.some(item => url.indexOf(item) > -1);
 }
 
 function isCacheExpired(cachedAt) {
@@ -82,6 +90,7 @@ self.addEventListener("install", event => {
 
   event.waitUntil(
     caches.delete(STATIC_CACHE).then(() => {
+      idb.delete("json-cache");
       console.log("purging cache");
       caches.open(STATIC_CACHE).then(cache => {
         cache
@@ -111,6 +120,19 @@ self.addEventListener("fetch", async event => {
       }
     });
 
+  const handlePostsImages = async () => {
+    const response = await caches.match(event.request);
+
+    if (response) {
+      return response;
+    } else {
+      const cache = await caches.open(STATIC_CACHE);
+      await cache.add(event.request.url);
+
+      return fetch(event.request);
+    }
+  };
+
   const handlePostsResponse = async () => {
     const postsByRequest = (await readAllData("posts")).find(
       postByRequest => postByRequest.requestUrl === postsUrl
@@ -135,8 +157,10 @@ self.addEventListener("fetch", async event => {
     }
   };
 
-  if (event.request.url.indexOf(postsUrl) > -1) {
+  if (matchUrl(event.request.url, [postsUrl])) {
     event.respondWith(handlePostsResponse());
+  } else if (matchUrl(event.request.url, ["jpg", "webp", "png"])) {
+    event.respondWith(handlePostsImages());
   } else {
     event.respondWith(handleAssetsResponse());
   }
