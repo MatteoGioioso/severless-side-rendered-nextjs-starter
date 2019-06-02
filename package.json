@@ -42,7 +42,8 @@
     "react-notification": "^6.8.4",
     "react-share": "^3.0.0",
     "sass-loader": "^7.1.0",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "universal-cookie": "^4.0.0"
   },
   "devDependencies": {
     "cpx": "^1.5.0",

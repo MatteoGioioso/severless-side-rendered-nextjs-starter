@@ -10,6 +10,8 @@ import {
   checkForServiceWorkerUpdate
 } from "../services/helpers";
 import { colors } from "./Styled/vars";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 class Layout extends React.Component {
   constructor(props) {
@@ -18,13 +20,23 @@ class Layout extends React.Component {
     this.state = {
       isMenuVisible: false,
       loading: "is-loading",
-      isNotificationOpen: false
+      isNotificationOpen: false,
+      isPrivacyConsentOpen: false
     };
 
     this.worker = null;
 
     this.handleToggleMenu = this.handleToggleMenu.bind(this);
     this.handleNotificationClick = this.handleNotificationClick.bind(this);
+    this.checkPrivacyPolicyConsent = this.checkPrivacyPolicyConsent.bind(this);
+    this.handlePrivacyConsentClick = this.handlePrivacyConsentClick.bind(this);
+  }
+
+  checkPrivacyPolicyConsent() {
+    const consent = cookies.get("cookieconsent_status");
+    if (!consent) {
+      this.setState({ isPrivacyConsentOpen: true });
+    }
   }
 
   componentDidMount() {
@@ -37,6 +49,8 @@ class Layout extends React.Component {
         window.location.reload();
       });
     }
+
+    this.checkPrivacyPolicyConsent();
 
     registerServiceWorker(reg => {
       reg.addEventListener(
@@ -67,6 +81,13 @@ class Layout extends React.Component {
     }
   }
 
+  handlePrivacyConsentClick() {
+    cookies.set("cookieconsent_status", "dismiss", {
+      expires: new Date(new Date().getTime() + 180 * 24 * 60 * 60 * 1000)
+    });
+    this.setState({ isPrivacyConsentOpen: false });
+  }
+
   render() {
     return (
       <div
@@ -95,9 +116,38 @@ class Layout extends React.Component {
           }}
           actionStyle={{ color: "#f45c42" }}
         />
+
+        <Notification
+          isActive={this.state.isPrivacyConsentOpen}
+          message={Message()}
+          action="OK"
+          onClick={this.handlePrivacyConsentClick}
+          style={{
+            background: colors.accent1,
+            color: colors.whitebg
+          }}
+          actionStyle={{ color: "#f45c42", marginLeft: 0, fontSize: "16px" }}
+          barStyle={{ maxWidth: "300px", zIndex: "999" }}
+        />
       </div>
     );
   }
 }
 
 export default Layout;
+
+const Message = () => {
+  return (
+    <div>
+      This website use cookies for statistics purposes. By visiting it you will
+      accept our{" "}
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://hirvitek.com/privacyPolicy"
+      >
+        privacy policy
+      </a>
+    </div>
+  );
+};
