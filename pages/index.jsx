@@ -20,11 +20,10 @@ class Index extends React.Component {
     this.Skeleton = null;
     this.SkeletonTheme = null;
 
-    this.getPosts = this.getPosts.bind(this);
-    this.importDyanamicComponent;
+    this.importDynamicComponents = this.importDynamicComponents.bind(this);
   }
 
-  importDyanamicComponents() {
+  importDynamicComponents() {
     this.Skeleton = dynamic(() => import("react-loading-skeleton"));
 
     this.SkeletonTheme = dynamic(() =>
@@ -32,27 +31,36 @@ class Index extends React.Component {
     );
   }
 
-  async getPosts() {
-    this.setState({ isLoading: true });
-    const data = await contentfulClient.getEntries({
-      content_type: "post",
-      limit: 4
-    });
-
-    const posts = data.items.map(post => ({
+  static transformDataToPosts(data) {
+    return data.items.map(post => ({
       ...post.fields,
       id: post.sys.id,
       createdAt: post.sys.createdAt
     }));
+  }
+
+  static async getPosts() {
+    try {
+      const data = await contentfulClient.getEntries({
+        content_type: "post"
+      });
+
+      return Index.transformDataToPosts(data);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async componentDidMount() {
+    this.importDynamicComponents();
+
+    this.setState({ isLoading: true });
+
+    const posts = await Index.getPosts();
 
     setTimeout(() => {
       this.setState({ posts, isLoading: false });
-    }, 1000);
-  }
-
-  componentDidMount() {
-    this.importDyanamicComponents();
-    this.getPosts();
+    }, 800);
   }
 
   render() {

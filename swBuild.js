@@ -10,7 +10,6 @@ const {
   appendFile,
   readFile
 } = require("fs").promises;
-const exec = require("child_process").exec;
 const crypto = require("crypto");
 
 const getHash = content => {
@@ -71,11 +70,20 @@ async function writeNewServiceWorkerVersion(fileHash) {
 
 //Write the all the files path into sw-dynamic-asset.js
 getFiles(BASE_URL)
-  .then(async fileaPaths => {
-    const assetsPathArray = fileaPaths
-      .map(filePath =>
-        filePath.replace("/home/madeo/Projects/hirviblog/public", "")
-      )
+  .then(async filesPaths => {
+    const assetsPathArray = filesPaths
+      .map(filePath => {
+        if (process.platform === "win32" || process.platform === "win64") {
+          const cutIndex = filePath.indexOf("\\_next");
+          const replaceSlashes = filePath
+            .split("\\")
+            .filter(elem => elem !== "\\")
+            .join("/");
+          return replaceSlashes.slice(cutIndex);
+        } else {
+          return filePath.replace(`${__dirname}/public`, "");
+        }
+      })
       .map(filePath => `"${filePath}"`);
 
     console.log(assetsPathArray);

@@ -32,18 +32,18 @@ class Layout extends React.Component {
       this.setState({ loading: "" });
     }, 100);
 
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.addEventListener("controllerchange", function() {
+        window.location.reload();
+      });
+    }
+
     registerServiceWorker(reg => {
       reg.addEventListener(
         "updatefound",
         checkForServiceWorkerUpdate(this, reg)
       );
     });
-
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.addEventListener("controllerchange", function() {
-        window.location.reload();
-      });
-    }
 
     initGA();
     logPageView();
@@ -93,7 +93,7 @@ class Layout extends React.Component {
             background: colors.accent1,
             color: colors.whitebg
           }}
-          actionStyle={{ color: colors.other1 }}
+          actionStyle={{ color: "#f45c42" }}
         />
       </div>
     );
