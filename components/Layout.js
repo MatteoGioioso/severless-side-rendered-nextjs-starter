@@ -7,7 +7,8 @@ import { Notification } from "react-notification";
 import { initGA, logPageView } from "../services/GoogleAnalytics";
 import {
   registerServiceWorker,
-  checkForServiceWorkerUpdate
+  checkForServiceWorkerUpdate,
+  deferInstallPrompt
 } from "../services/helpers";
 import { colors } from "./Styled/vars";
 import Cookies from "universal-cookie";
@@ -21,7 +22,10 @@ class Layout extends React.Component {
       isMenuVisible: false,
       loading: "is-loading",
       isNotificationOpen: false,
-      isPrivacyConsentOpen: false
+
+      isPrivacyConsentOpen: false,
+
+      deferredPrompt: null
     };
 
     this.worker = null;
@@ -30,6 +34,7 @@ class Layout extends React.Component {
     this.handleNotificationClick = this.handleNotificationClick.bind(this);
     this.checkPrivacyPolicyConsent = this.checkPrivacyPolicyConsent.bind(this);
     this.handlePrivacyConsentClick = this.handlePrivacyConsentClick.bind(this);
+    this.handleInstall = this.handleInstall.bind(this);
   }
 
   checkPrivacyPolicyConsent() {
@@ -57,6 +62,12 @@ class Layout extends React.Component {
         "updatefound",
         checkForServiceWorkerUpdate(this, reg)
       );
+    });
+
+    deferInstallPrompt(deferredPrompt => this.setState({ deferredPrompt }));
+
+    navigator.serviceWorker.addEventListener("controllerchange", function() {
+      window.location.reload();
     });
 
     initGA();
@@ -88,6 +99,25 @@ class Layout extends React.Component {
     this.setState({ isPrivacyConsentOpen: false });
   }
 
+  handleInstall() {
+    const { deferredPrompt } = this.state;
+
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      console.log(deferredPrompt);
+      deferredPrompt.userChoice.then(function(choiceResult) {
+        if (choiceResult.outcome === "accepted") {
+          //Log the event with google analytics
+          console.log("Your PWA has been installed");
+        } else {
+          console.log("User chose to not install your PWA");
+        }
+
+        this.setState({ deferredPrompt: null });
+      });
+    }
+  }
+
   render() {
     return (
       <div
@@ -102,7 +132,11 @@ class Layout extends React.Component {
           {this.props.children}
           <Footer />
         </div>
-        <Menu onToggleMenu={this.handleToggleMenu} />
+        <Menu
+          onToggleMenu={this.handleToggleMenu}
+          handleInstall={this.handleInstall}
+          deferredPrompt={this.state.deferredPrompt}
+        />
 
         {/* Display if app has been updated*/}
         <Notification

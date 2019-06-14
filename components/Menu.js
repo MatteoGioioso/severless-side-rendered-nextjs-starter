@@ -54,10 +54,20 @@ const Menu = props => {
             </a>
           </ListLink>
         </ul>
-        {/*<ul className="actions vertical">*/}
-        {/*    <li><a href="#" className="button special fit">Get Started</a></li>*/}
-        {/*    <li><a href="#" className="button fit">Log In</a></li>*/}
-        {/*</ul>*/}
+        <ul className="actions vertical">
+          {/* <li>
+            <a href="#" className="button special fit">
+              Get Started
+            </a>
+          </li> */}
+          {props.deferredPrompt && (
+            <li>
+              <a onClick={props.handleInstall} className="button special fit">
+                Install Hirvitek Blog
+              </a>
+            </li>
+          )}
+        </ul>
       </div>
       <a className="close" onClick={props.onToggleMenu} href="javascript:;">
         Close
