@@ -3,7 +3,6 @@ importScripts("idb.js");
 
 const SW_VERSION = "086a4173a6fc7ea226f03baa0259a323"
 
-
 const STATIC_CACHE = "static-cache";
 const CACHE_MAX_AGE_DAYS = 7;
 const appShellFiles = [
