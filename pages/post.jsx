@@ -14,8 +14,7 @@ class Post extends React.Component {
       isMobile: false,
       bottomWidget: false,
       articleStart: true,
-      themeName: "morning",
-      isPostAvailableOffline: false
+      themeName: "morning"
     };
 
     this.handleIntersection = this.handleIntersection.bind(this);
@@ -31,9 +30,7 @@ class Post extends React.Component {
   cachePost() {
     if ("caches" in window) {
       caches.open("static-cache").then(cache => {
-        cache
-          .addAll([`/post/${this.props.postId}`])
-          .then(() => this.setState({ isPostAvailableOffline: true }));
+        cache.addAll([`/post/${this.props.postId}`]);
       });
     }
   }
@@ -73,7 +70,6 @@ class Post extends React.Component {
           createdAt={this.props.createdAt}
           themeName={this.props.themeName}
           handleThemeChange={this.props.handleThemeChange}
-          isPostAvailableOffline={this.state.isPostAvailableOffline}
         />
 
         <div

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FaMoon, FaRegCheckCircle } from "react-icons/fa";
+import { FaMoon, FaRegCheckCircle, FaSyncAlt } from "react-icons/fa";
 import { useIsClient } from "../../services/helpers";
 import { TopShareWidget } from "../Posts/BottomShareWidget";
 
@@ -36,8 +36,7 @@ const TitleBanner = ({
   post,
   createdAt,
   handleThemeChange,
-  themeName,
-  isPostAvailableOffline
+  themeName
 }) => {
   return (
     <PostTitleContainer className="post-title-container" themeName={themeName}>
@@ -73,11 +72,7 @@ const TitleBanner = ({
               {displayDate(createdAt)}
             </p>
           </div>
-          <div style={{ padding: "15px" }}>
-            {isPostAvailableOffline && (
-              <FaRegCheckCircle style={{ fontSize: "20px" }} />
-            )}
-          </div>
+
           {useIsClient() && <TopShareWidget post={post} />}
           <div style={{ padding: "15px" }}>
             <FaMoon
