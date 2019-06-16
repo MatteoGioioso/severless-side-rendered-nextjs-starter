@@ -29,9 +29,7 @@ class Layout extends React.Component {
       isMenuVisible: false,
       loading: "is-loading",
       isNotificationOpen: false,
-
       isPrivacyConsentOpen: false,
-
       deferredPrompt: null
     };
 
@@ -107,7 +105,6 @@ class Layout extends React.Component {
 
     if (deferredPrompt) {
       deferredPrompt.prompt();
-      console.log(deferredPrompt);
       deferredPrompt.userChoice.then(function(choiceResult) {
         if (choiceResult.outcome === "accepted") {
           //Log the event with google analytics

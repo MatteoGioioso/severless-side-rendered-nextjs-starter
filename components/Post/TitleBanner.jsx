@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FaMoon, FaRegCheckCircle, FaSyncAlt } from "react-icons/fa";
+import { FaMoon } from "react-icons/fa";
 import { useIsClient } from "../../services/helpers";
 import { TopShareWidget } from "../Posts/BottomShareWidget";
 

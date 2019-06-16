@@ -15,7 +15,7 @@ const BottomSharedWidget = ({ post }) => {
       {promptWebShare().doesWebShareExist() ? (
         <FaShareAlt
           style={{ fontSize: "20px" }}
-          onClick={promptWebShare().sharePost({
+          onClick={() => promptWebShare().sharePost({
             title: post.title,
             description: post.summary,
             url: window.location.pathname
@@ -36,7 +36,7 @@ export const TopShareWidget = ({ post }) => {
       {promptWebShare().doesWebShareExist() && (
         <FaShareAlt
           style={{ fontSize: "20px" }}
-          onClick={promptWebShare().sharePost({
+          onClick={() => promptWebShare().sharePost({
             title: post.title,
             description: post.summary,
             url: window.location.pathname
