@@ -38,6 +38,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-ga": "^2.5.7",
+    "react-icons": "^3.7.0",
     "react-loading-skeleton": "^1.1.2",
     "react-notification": "^6.8.4",
     "react-share": "^3.0.0",

@@ -10,9 +10,16 @@ import {
   checkForServiceWorkerUpdate,
   deferInstallPrompt
 } from "../services/helpers";
+import styled from "styled-components";
 import { colors } from "./Styled/vars";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
+
+const Wrapper = styled.div`
+  background-color: ${props =>
+    props.theme[props.themeName].backgroundColor} !important;
+  color: ${props => props.theme[props.themeName].textColor} !important;
+`;
 
 class Layout extends React.Component {
   constructor(props) {
@@ -127,11 +134,11 @@ class Layout extends React.Component {
       >
         <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
 
-        <div id="wrapper">
+        <Wrapper id="wrapper" themeName={this.props.themeName}>
           <Header onToggleMenu={this.handleToggleMenu} />
           {this.props.children}
           <Footer />
-        </div>
+        </Wrapper>
         <Menu
           onToggleMenu={this.handleToggleMenu}
           handleInstall={this.handleInstall}

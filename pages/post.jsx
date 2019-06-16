@@ -4,9 +4,21 @@ import SEO from "../components/SEO";
 import React from "react";
 import { isMobile } from "../services/helpers";
 import ShareWidget from "../components/Posts/ShareWidget";
-import styled, {ThemeProvider} from "styled-components";
+import { ThemeProvider } from "styled-components";
 import TitleBanner from "../components/Post/TitleBanner";
 import Content from "../components/Post/Content";
+import { colors } from "../components/Styled/vars";
+
+const theme = {
+  morning: {
+    backgroundColor: colors.whitebg,
+    textColor: colors.bgalt
+  },
+  night: {
+    backgroundColor: colors.bgalt,
+    textColor: colors.whitebg
+  }
+};
 
 class Post extends React.Component {
   constructor(props) {
@@ -16,10 +28,11 @@ class Post extends React.Component {
       isMobile: false,
       bottomWidget: false,
       articleStart: true,
-      isThemeNight: false
+      themeName: "morning"
     };
 
     this.handleIntersection = this.handleIntersection.bind(this);
+    this.handleThemeChange = this.handleThemeChange.bind(this);
   }
 
   handleIntersection(event) {
@@ -41,6 +54,13 @@ class Post extends React.Component {
     this.cachePost();
   }
 
+  handleThemeChange() {
+    this.setState(prevState => {
+      const nextState = prevState.themeName === "morning" ? "night" : "morning";
+      return {themeName: nextState}
+    })
+  }
+
   render() {
     const { post, postId } = this.props;
 
@@ -56,31 +76,43 @@ class Post extends React.Component {
     };
 
     return (
-      <Layout>
-        <SEO
-          seoConfig={{
-            title: post.title,
-            description: post.summary,
-            url: postId,
-            imageUrl: post.imagesUrls[0]
-          }}
-        />
+      <ThemeProvider theme={theme}>
+        <Layout themeName={this.state.themeName}>
+          <SEO
+            seoConfig={{
+              title: post.title,
+              description: post.summary,
+              url: postId,
+              imageUrl: post.imagesUrls[0]
+            }}
+          />
 
-        <TitleBanner post={this.props.post} createdAt={this.props.createdAt} />
+          <TitleBanner
+            post={this.props.post}
+            createdAt={this.props.createdAt}
+            themeName={this.state.themeName}
+            handleThemeChange={this.handleThemeChange}
+          />
 
-        <div
-          style={{
-            width: "100%",
-            height: "350px",
-            background: `url("${post.imagesUrls[0]}") center no-repeat`,
-            backgroundSize: "cover"
-          }}
-        />
+          <div
+            style={{
+              width: "100%",
+              height: "350px",
+              background: `url("${post.imagesUrls[0]}") center no-repeat`,
+              backgroundSize: "cover"
+            }}
+          />
 
-        <Content post={post} postId={postId} options={options} />
+          <Content
+            post={post}
+            postId={postId}
+            options={options}
+            themeName={this.state.themeName}
+          />
 
-        {!this.state.isMobile && renderSharingWidget()}
-      </Layout>
+          {!this.state.isMobile && renderSharingWidget()}
+        </Layout>
+      </ThemeProvider>
     );
   }
 }
