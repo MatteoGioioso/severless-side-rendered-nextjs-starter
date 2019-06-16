@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 export function registerServiceWorker(callback) {
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker
@@ -46,7 +48,50 @@ export function deferInstallPrompt(callback) {
     e.preventDefault();
     // Stash the event so it can be triggered later.
     deferredPrompt = e;
-    
+
     callback(deferredPrompt);
   });
+}
+
+export function promptWebShare() {
+  return {
+    doesWebShareExist: () => Boolean(navigator.share),
+    sharePost: options => {
+      if (navigator.share) {
+        navigator
+          .share({
+            title: options.title,
+            text: options.description,
+            url: options.url
+          })
+          .then(() => console.log("Successful share"))
+          .catch(error => console.log("Error sharing", error));
+      }
+    }
+  };
+}
+
+export function useIsClient() {
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  });
+
+  return isClient;
+}
+
+export function lightSensor(callback) {
+  if ("AmbientLightSensor" in window) {
+    try {
+      const sensor = new AmbientLightSensor();
+      sensor.addEventListener("reading", () => callback(sensor.illuminance));
+      sensor.start();
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  if ("ondevicelight" in window) {
+    window.addEventListener("devicelight", event => callback(event.value));
+  }
 }

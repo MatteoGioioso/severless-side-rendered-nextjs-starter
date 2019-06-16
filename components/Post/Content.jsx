@@ -1,8 +1,9 @@
-import React from "react";
-import Observer from "@researchgate/react-intersection-observer";
+import React, { useEffect, useState } from "react";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import BottomSharedWidget from "../Posts/BottomShareWidget";
 import styled from "styled-components";
+import {colors} from "../Styled/vars";
+import {useIsClient} from "../../services/helpers";
 
 const Container = styled.div`
   background-color: ${props =>
@@ -25,14 +26,10 @@ const Markdown = styled.div`
   }
 `;
 
-const Content = ({ post, postId, options, themeName }) => {
+const Content = ({ post, postId, themeName }) => {
   return (
     <Container id="main" className="alt" themeName={themeName}>
       <section id="one" className="post-content-container">
-        <Observer {...options}>
-          <div data-name="articleStart" />
-        </Observer>
-
         <div className="inner">
           <Markdown
             themeName={themeName}
@@ -44,20 +41,16 @@ const Content = ({ post, postId, options, themeName }) => {
         </div>
       </section>
 
-      <Observer {...options}>
-        <div
-          data-name="bottomWidget"
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginTop: "-50px"
-          }}
-        >
-          <BottomSharedWidget
-            url={`https://blog.hirvitek.com/post/${postId}`}
-          />
-        </div>
-      </Observer>
+      <div
+        data-name="bottomWidget"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "-50px"
+        }}
+      >
+        {useIsClient() && <BottomSharedWidget post={post} />}
+      </div>
     </Container>
   );
 };

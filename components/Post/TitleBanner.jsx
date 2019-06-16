@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { FaMoon } from "react-icons/fa";
+import { FaMoon, FaRegCheckCircle } from "react-icons/fa";
+import { useIsClient } from "../../services/helpers";
+import { TopShareWidget } from "../Posts/BottomShareWidget";
 
 function displayDate(createdAt) {
   return new Date(createdAt)
@@ -15,7 +17,8 @@ const PostTitleContainer = styled.div`
   flex-direction: column;
   width: 90%;
   padding: 2%;
-  background-color : ${props => props.theme[props.themeName].backgroundColor} !important;
+  background-color: ${props =>
+    props.theme[props.themeName].backgroundColor} !important;
   h1,
   h2,
   h3,
@@ -29,7 +32,13 @@ const PostTitleContainer = styled.div`
   }
 `;
 
-const TitleBanner = ({ post, createdAt, handleThemeChange, themeName }) => {
+const TitleBanner = ({
+  post,
+  createdAt,
+  handleThemeChange,
+  themeName,
+  isPostAvailableOffline
+}) => {
   return (
     <PostTitleContainer className="post-title-container" themeName={themeName}>
       <div>
@@ -64,6 +73,12 @@ const TitleBanner = ({ post, createdAt, handleThemeChange, themeName }) => {
               {displayDate(createdAt)}
             </p>
           </div>
+          <div style={{ padding: "15px" }}>
+            {isPostAvailableOffline && (
+              <FaRegCheckCircle style={{ fontSize: "20px" }} />
+            )}
+          </div>
+          {useIsClient() && <TopShareWidget post={post} />}
           <div style={{ padding: "15px" }}>
             <FaMoon
               style={{ cursor: "pointer", fontSize: "20px" }}

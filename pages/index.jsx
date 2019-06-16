@@ -7,18 +7,7 @@ import { colors } from "../components/Styled/vars";
 import { contentfulClient } from "../services/Contentful";
 import dynamic from "next/dynamic";
 import { PostSkeleton } from "../components/Posts/Loaders";
-import { ThemeProvider } from "styled-components";
-
-const theme = {
-  morning: {
-    backgroundColor: colors.whitebg,
-    textColor: colors.bgalt
-  },
-  night: {
-    backgroundColor: colors.bgalt,
-    textColor: colors.whitebg
-  }
-};
+import {StoreProvider, withStoreConsumer} from "../components/Store/Store";
 
 class Index extends React.Component {
   constructor(props) {
@@ -79,7 +68,7 @@ class Index extends React.Component {
     const { posts, isLoading } = this.state;
 
     return (
-      <ThemeProvider theme={theme}>
+      <StoreProvider>
         <Layout themeName="morning">
           <SEO />
           <div style={{ backgroundColor: colors.whitebg }}>
@@ -103,7 +92,7 @@ class Index extends React.Component {
             </div>
           </div>
         </Layout>
-      </ThemeProvider>
+      </StoreProvider>
     );
   }
 }
