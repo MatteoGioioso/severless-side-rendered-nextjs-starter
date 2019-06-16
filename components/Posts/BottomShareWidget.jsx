@@ -33,7 +33,7 @@ export default BottomSharedWidget;
 export const TopShareWidget = ({ post }) => {
   return (
     <WidgetContainer>
-      {true && (
+      {promptWebShare().doesWebShareExist() && (
         <FaShareAlt
           style={{ fontSize: "20px" }}
           onClick={promptWebShare().sharePost({
