@@ -47,9 +47,17 @@ export function deferInstallPrompt(callback) {
     // Prevent Chrome 67 and earlier from automatically showing the prompt
     e.preventDefault();
     // Stash the event so it can be triggered later.
-    console.log(e)
+    console.log(e);
     callback(e);
   });
+}
+
+export function getDeferredPrompt() {
+  const deferredPrompt = sessionStorage.getItem("deferredPrompt");
+
+  if(deferredPrompt){
+    return JSON.parse(deferredPrompt)
+  }
 }
 
 export function promptWebShare() {

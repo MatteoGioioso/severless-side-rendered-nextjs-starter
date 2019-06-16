@@ -15,7 +15,7 @@ import { colors } from "./Styled/vars";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
-const Wrapper = styled.div` 
+const Wrapper = styled.div`
   background-color: ${props =>
     props.theme[props.themeName].backgroundColor} !important;
   color: ${props => props.theme[props.themeName].textColor} !important;
