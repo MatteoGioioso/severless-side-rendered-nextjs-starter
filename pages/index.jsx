@@ -1,6 +1,5 @@
 import SEO from "../components/SEO";
 import Layout from "../components/Layout";
-import BannerLanding from "../components/BannerLanding";
 import Post from "../components/Posts/Post";
 import React from "react";
 import { contentfulClient } from "../services/Contentful";
@@ -13,6 +12,7 @@ const Container = styled.div`
   background-color: ${props =>
     props.theme[props.themeName].backgroundColor} !important;
   color: ${props => props.theme[props.themeName].textColor} !important;
+  min-height: 100vh;
 `;
 
 class Index extends React.Component {
@@ -76,8 +76,6 @@ class Index extends React.Component {
     return (
       <Layout>
         <SEO />
-
-        {/* <BannerLanding /> */}
 
         <Container id="main" themeName={this.props.themeName}>
           <section id="two" className="spotlights posts-thumbnail-container">
