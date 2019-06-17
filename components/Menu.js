@@ -2,18 +2,26 @@ import Link from "next/link";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { colors } from "./Styled/vars";
+import { FaMoon } from "react-icons/fa";
+
+const Container = styled.div`
+  background-color: ${props =>
+    props.theme[props.themeName].backgroundColorMenu} !important;
+  color: ${props => props.theme[props.themeName].textColor} !important;
+`;
 
 const ListLink = styled.li`
   cursor: pointer;
-  transition: all 800ms ease-in-out;
+  transition: all 400ms ease-in-out;
 
   &:hover {
-    background: ${colors.bgalt};
+    background-color: ${props =>
+      props.theme[props.themeName].bgHover} !important;
   }
 
   &:hover span {
     transition: all 800ms ease-in-out;
-    color: ${colors.menubg};
+    color: ${props => props.theme[props.themeName].colorHover} !important;
   }
 `;
 
@@ -22,29 +30,36 @@ const Menu = props => {
   const [contactModal, setContactModal] = useState(false);
 
   return (
-    <nav id="menu">
+    <Container id="menu" themeName={props.themeName}>
       <div className="inner">
         <ul className="links">
-          <ListLink onClick={props.onToggleMenu}>
+          <ListLink onClick={props.onToggleMenu} themeName={props.themeName}>
             <Link href="/">
               <a>
                 <span>Home</span>
               </a>
             </Link>
           </ListLink>
-          <ListLink onClick={() => setAboutModal(true)}>
+
+          <ListLink
+            onClick={() => setAboutModal(true)}
+            themeName={props.themeName}
+          >
             <a>
               <span>About</span>
             </a>
           </ListLink>
 
-          <ListLink onClick={() => setContactModal(true)}>
+          <ListLink
+            onClick={() => setContactModal(true)}
+            themeName={props.themeName}
+          >
             <a>
               <span>Contact</span>
             </a>
           </ListLink>
 
-          <ListLink>
+          <ListLink themeName={props.themeName}>
             <a
               href="https://hirvitek.com"
               target="_blank"
@@ -54,12 +69,26 @@ const Menu = props => {
             </a>
           </ListLink>
         </ul>
+
         <ul className="actions vertical">
-          {/* <li>
-            <a href="#" className="button special fit">
-              Get Started
+          <li>
+            <a
+              onClick={() => {
+                props.handleThemeChange();
+                props.onToggleMenu();
+              }}
+              className="button fit"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <FaMoon style={{ cursor: "pointer", fontSize: "20px" }}>
+                Change Theme
+              </FaMoon>
             </a>
-          </li> */}
+          </li>
           {props.deferredPrompt && (
             <li>
               <a onClick={props.handleInstall} className="button special fit">
@@ -75,7 +104,7 @@ const Menu = props => {
 
       {aboutModal && <About setAboutModal={setAboutModal} />}
       {contactModal && <Contact setContactModal={setContactModal} />}
-    </nav>
+    </Container>
   );
 };
 

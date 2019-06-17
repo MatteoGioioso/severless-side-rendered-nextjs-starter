@@ -5,11 +5,19 @@ import { colors } from "../Styled/vars";
 const theme = {
   morning: {
     backgroundColor: colors.whitebg,
-    textColor: colors.bgalt
+    backgroundColorMenu: colors.menubg,
+    backgroundColorHover: colors.whitebg_2,
+    textColor: colors.bgalt,
+    bgHover: colors.bgalt,
+    colorHover: colors.whitebg
   },
   night: {
     backgroundColor: colors.bgalt,
-    textColor: colors.whitebg
+    backgroundColorMenu: colors.bgalt_2,
+    backgroundColorHover: colors.accent1,
+    textColor: colors.whitebg,
+    bgHover: colors.whitebg,
+    colorHover: colors.bgalt
   }
 };
 
@@ -17,6 +25,7 @@ export const StoreContext = React.createContext({});
 
 export const StoreProvider = ({ children }) => {
   const [themeName, setThemeName] = useState("morning");
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
 
   function handleThemeChange() {
     const nextThemeName = themeName === "morning" ? "night" : "morning";
@@ -27,7 +36,9 @@ export const StoreProvider = ({ children }) => {
     <StoreContext.Provider
       value={{
         themeName,
-        handleThemeChange
+        deferredPrompt,
+        handleThemeChange,
+        setDeferredPrompt
       }}
     >
       <ThemeProvider theme={theme}>{children}</ThemeProvider>

@@ -4,6 +4,7 @@ export const colors = {
   menubg: "rgba(246, 241, 235, 0.9)",
   bg: "rgba(246, 241, 235, 0.5)",
   bgalt: "#212e37",
+  bgalt_2: 'rgba(33, 46, 55, 0.9)',
   fg: "#596d64",
   fgbold: "#899985",
   fglight: "#6b8170",

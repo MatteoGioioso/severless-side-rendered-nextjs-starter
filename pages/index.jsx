@@ -3,11 +3,17 @@ import Layout from "../components/Layout";
 import BannerLanding from "../components/BannerLanding";
 import Post from "../components/Posts/Post";
 import React from "react";
-import { colors } from "../components/Styled/vars";
 import { contentfulClient } from "../services/Contentful";
 import dynamic from "next/dynamic";
 import { PostSkeleton } from "../components/Posts/Loaders";
-import {StoreProvider, withStoreConsumer} from "../components/Store/Store";
+import styled from "styled-components";
+import { withStoreConsumer } from "../components/Store/Store";
+
+const Container = styled.div`
+  background-color: ${props =>
+    props.theme[props.themeName].backgroundColor} !important;
+  color: ${props => props.theme[props.themeName].textColor} !important;
+`;
 
 class Index extends React.Component {
   constructor(props) {
@@ -68,33 +74,32 @@ class Index extends React.Component {
     const { posts, isLoading } = this.state;
 
     return (
-      <StoreProvider>
-        <Layout themeName="morning">
-          <SEO />
-          <div style={{ backgroundColor: colors.whitebg }}>
-            <BannerLanding />
+      <Layout>
+        <SEO />
 
-            <div id="main">
-              <section
-                id="two"
-                className="spotlights posts-thumbnail-container"
-              >
-                {posts.map(post => (
-                  <Post key={post.id} {...post} imageUrl={post.imagesUrls[0]} />
-                ))}
-                {isLoading && (
-                  <PostSkeleton
-                    SkeletonTheme={this.SkeletonTheme}
-                    Skeleton={this.Skeleton}
-                  />
-                )}
-              </section>
-            </div>
-          </div>
-        </Layout>
-      </StoreProvider>
+        <BannerLanding />
+
+        <Container id="main" themeName={this.props.themeName}>
+          <section id="two" className="spotlights posts-thumbnail-container">
+            {posts.map(post => (
+              <Post
+                key={post.id}
+                {...post}
+                imageUrl={post.imagesUrls[0]}
+                themeName={this.props.themeName}
+              />
+            ))}
+            {isLoading && (
+              <PostSkeleton
+                SkeletonTheme={this.SkeletonTheme}
+                Skeleton={this.Skeleton}
+              />
+            )}
+          </section>
+        </Container>
+      </Layout>
     );
   }
 }
 
-export default Index;
+export default withStoreConsumer(Index);

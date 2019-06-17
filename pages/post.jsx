@@ -4,7 +4,7 @@ import SEO from "../components/SEO";
 import React from "react";
 import TitleBanner from "../components/Post/TitleBanner";
 import Content from "../components/Post/Content";
-import { StoreProvider, withStoreConsumer } from "../components/Store/Store";
+import { withStoreConsumer } from "../components/Store/Store";
 
 class Post extends React.Component {
   constructor(props) {
@@ -17,13 +17,7 @@ class Post extends React.Component {
       themeName: "morning"
     };
 
-    this.handleIntersection = this.handleIntersection.bind(this);
     this.handleThemeChange = this.handleThemeChange.bind(this);
-  }
-
-  handleIntersection(event) {
-    const name = event.target.dataset.name;
-    this.setState({ [name]: event.isIntersecting });
   }
 
   //Dynamic SSR html caching
@@ -49,13 +43,8 @@ class Post extends React.Component {
   render() {
     const { post, postId } = this.props;
 
-    const options = {
-      onChange: this.handleIntersection,
-      rootMargin: "0% 0% 0%"
-    };
-
     return (
-      <Layout themeName={this.props.themeName}>
+      <Layout>
         <SEO
           seoConfig={{
             title: post.title,
@@ -84,7 +73,6 @@ class Post extends React.Component {
         <Content
           post={post}
           postId={postId}
-          options={options}
           themeName={this.props.themeName}
         />
       </Layout>
@@ -94,15 +82,7 @@ class Post extends React.Component {
 
 const PostWithConsumer = withStoreConsumer(Post);
 
-const PostWithProvider = props => {
-  return (
-    <StoreProvider>
-      <PostWithConsumer {...props} />
-    </StoreProvider>
-  );
-};
-
-PostWithProvider.getInitialProps = async request => {
+PostWithConsumer.getInitialProps = async request => {
   const getId = request => {
     if (request.req) {
       return request.req.params.postId;
@@ -124,4 +104,4 @@ PostWithProvider.getInitialProps = async request => {
   };
 };
 
-export default PostWithProvider;
+export default PostWithConsumer;

@@ -13,6 +13,7 @@ import {
 import styled from "styled-components";
 import { colors } from "./Styled/vars";
 import Cookies from "universal-cookie";
+import { withStoreConsumer } from "./Store/Store";
 const cookies = new Cookies();
 
 const Wrapper = styled.div`
@@ -29,8 +30,7 @@ class Layout extends React.Component {
       isMenuVisible: false,
       loading: "is-loading",
       isNotificationOpen: false,
-      isPrivacyConsentOpen: false,
-      deferredPrompt: null
+      isPrivacyConsentOpen: false
     };
 
     this.worker = null;
@@ -69,7 +69,9 @@ class Layout extends React.Component {
       );
     });
 
-    deferInstallPrompt(deferredPrompt => this.setState({ deferredPrompt }));
+    deferInstallPrompt(deferredPrompt =>
+      this.props.setDeferredPrompt(deferredPrompt)
+    );
 
     initGA();
     logPageView();
@@ -101,7 +103,7 @@ class Layout extends React.Component {
   }
 
   handleInstall() {
-    const { deferredPrompt } = this.state;
+    const { deferredPrompt } = this.props;
 
     if (deferredPrompt) {
       deferredPrompt.prompt();
@@ -113,7 +115,7 @@ class Layout extends React.Component {
           console.log("User chose to not install your PWA");
         }
 
-        this.setState({ deferredPrompt: null });
+        this.props.setDeferredPrompt(null);
       });
     }
   }
@@ -135,7 +137,9 @@ class Layout extends React.Component {
         <Menu
           onToggleMenu={this.handleToggleMenu}
           handleInstall={this.handleInstall}
-          deferredPrompt={this.state.deferredPrompt}
+          deferredPrompt={this.props.deferredPrompt}
+          handleThemeChange={this.props.handleThemeChange}
+          themeName={this.props.themeName}
         />
 
         {/* Display if app has been updated*/}
@@ -168,7 +172,7 @@ class Layout extends React.Component {
   }
 }
 
-export default Layout;
+export default withStoreConsumer(Layout);
 
 const Message = () => {
   return (

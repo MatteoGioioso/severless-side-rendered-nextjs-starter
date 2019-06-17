@@ -2,6 +2,7 @@ import React from "react";
 import App, { Container } from "next/app";
 import * as Sentry from "@sentry/browser";
 import ErrorPage from "../components/ErrorPage";
+import { StoreProvider } from "../components/Store/Store";
 
 Sentry.init({
   dsn: "https://154f5d38df25449d86b5cd1a6131ddab@sentry.io/1457543"
@@ -49,7 +50,9 @@ class MyApp extends App {
       //when there's not an error, render children untouched
       return (
         <Container>
-          <Component {...pageProps} />
+          <StoreProvider>
+            <Component {...pageProps} />
+          </StoreProvider>
         </Container>
       );
     }

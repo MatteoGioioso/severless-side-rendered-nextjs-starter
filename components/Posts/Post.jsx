@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { colors } from "../Styled/vars";
 import styled from "styled-components";
 import { withRouter } from "next/router";
 import { PostPageLoading } from "./Loaders";
@@ -7,16 +6,16 @@ import { PostPageLoading } from "./Loaders";
 const SectionContainer = styled.section`
   cursor: pointer;
   margin: 3%;
-  /* border: 1px solid ${colors.whitebg_2}; */
-  background-color: ${colors.whitebg} !important;
+  background-color: ${props =>
+    props.theme[props.themeName].backgroundColor} !important;
   transition: all 200ms ease-in-out;
   &:hover {
-    background-color: ${colors.whitebg_2} !important;
+    background-color: ${props =>
+      props.theme[props.themeName].backgroundColorHover} !important;
   }
 `;
 
 const Subtitle = styled.h5`
-  color: ${colors.bgalt};
   font-size: 13px;
   font-weight: 400;
   margin-bottom: 0;
@@ -30,6 +29,7 @@ const Post = ({
   createdAt,
   author,
   authorTitle,
+  themeName,
   router
 }) => {
   const postId = `${title
@@ -68,7 +68,7 @@ const Post = ({
 
   return (
     <>
-      <SectionContainer onClick={handleClickPost}>
+      <SectionContainer onClick={handleClickPost} themeName={themeName}>
         <a className="image">
           <img src={imageUrl} alt="" />
         </a>
@@ -76,7 +76,7 @@ const Post = ({
         <div className="content">
           <div className="inner">
             <header className="major" style={{ marginBottom: "10px" }}>
-              <h3 style={{ color: colors.bgalt, fontSize: "18px" }}>{title}</h3>
+              <h3 style={{ fontSize: "18px" }}>{title}</h3>
             </header>
             <p style={{ fontSize: "16px", marginBottom: "20px" }}>
               {summary.substring(0, 300)}
