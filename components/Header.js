@@ -1,21 +1,20 @@
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React from "react";
+import ThemeButton from "./ThemeButton";
 
 const Header = props => {
-  const [pathname, setPathname] = useState("/");
-
-  useEffect(() => {
-    setPathname(window.location.pathname)
-  });
-
   return (
     <header id="header" className="alt">
-      {pathname !== "/" && (
-        <Link href="/">
-          <a className="logo">Hirvitek / Blog</a>
-        </Link>
-      )}
+      <Link href="/">
+        <a className="logo">Hirvitek / Blog</a>
+      </Link>
+
       <nav>
+        <ThemeButton
+          themeName={props.themeName}
+          style={{ margin: "auto 0" }}
+          onClick={props.handleThemeChange}
+        />
         <a
           className="menu-link"
           onClick={props.onToggleMenu}

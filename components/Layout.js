@@ -130,7 +130,11 @@ class Layout extends React.Component {
         <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
 
         <Wrapper id="wrapper" themeName={this.props.themeName}>
-          <Header onToggleMenu={this.handleToggleMenu} />
+          <Header
+            onToggleMenu={this.handleToggleMenu}
+            themeName={this.props.themeName}
+            handleThemeChange={this.props.handleThemeChange}
+          />
           {this.props.children}
           <Footer />
         </Wrapper>

@@ -3,7 +3,7 @@ import React from "react";
 const Footer = props => {
   return (
     <footer id="footer">
-      <div className="inner">
+      <div className="inner" style={{padding: '1em 0 0.25em 0'}}>
         <ul className="icons">
           <li>
             <a

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { colors } from "./Styled/vars";
 import { FaMoon } from "react-icons/fa";
 
 const Container = styled.div`
@@ -71,28 +70,10 @@ const Menu = props => {
         </ul>
 
         <ul className="actions vertical">
-          <li>
-            <a
-              onClick={() => {
-                props.handleThemeChange();
-                props.onToggleMenu();
-              }}
-              className="button fit"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center"
-              }}
-            >
-              <FaMoon style={{ cursor: "pointer", fontSize: "20px" }}>
-                Change Theme
-              </FaMoon>
-            </a>
-          </li>
           {props.deferredPrompt && (
             <li>
               <a onClick={props.handleInstall} className="button special fit">
-                Install Hirvitek Blog
+                Install
               </a>
             </li>
           )}

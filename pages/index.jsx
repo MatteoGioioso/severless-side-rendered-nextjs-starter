@@ -77,7 +77,7 @@ class Index extends React.Component {
       <Layout>
         <SEO />
 
-        <BannerLanding />
+        {/* <BannerLanding /> */}
 
         <Container id="main" themeName={this.props.themeName}>
           <section id="two" className="spotlights posts-thumbnail-container">

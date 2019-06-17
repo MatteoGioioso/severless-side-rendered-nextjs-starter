@@ -74,14 +74,14 @@ const TitleBanner = ({
           </div>
 
           {useIsClient() && <TopShareWidget post={post} />}
-          <div style={{ padding: "15px" }}>
+          {/* <div style={{ padding: "15px" }}>
             <FaMoon
               style={{ cursor: "pointer", fontSize: "20px" }}
               onClick={handleThemeChange}
             >
               Change Theme
             </FaMoon>
-          </div>
+          </div> */}
         </div>
       </div>
       <br />
