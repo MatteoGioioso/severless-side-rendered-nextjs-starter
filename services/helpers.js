@@ -55,15 +55,15 @@ export function deferInstallPrompt(callback) {
 export function getDeferredPrompt() {
   const deferredPrompt = sessionStorage.getItem("deferredPrompt");
 
-  if(deferredPrompt){
-    return JSON.parse(deferredPrompt)
+  if (deferredPrompt) {
+    return JSON.parse(deferredPrompt);
   }
 }
 
 export function promptWebShare() {
   return {
     doesWebShareExist: () => Boolean(navigator.share),
-    sharePost: options => {
+    sharePost: (options, callback) => {
       if (navigator.share) {
         navigator
           .share({
@@ -71,9 +71,20 @@ export function promptWebShare() {
             text: options.description,
             url: options.url
           })
-          .then(() => console.log("Successful share"))
+          .then(() => callback())
           .catch(error => console.log("Error sharing", error));
       }
+    }
+  };
+}
+
+export function promptWebShareMock() {
+  return {
+    doesWebShareExist: () => true,
+    sharePost: (options, callback) => {
+      setTimeout(() => {
+        callback();
+      }, 3000);
     }
   };
 }

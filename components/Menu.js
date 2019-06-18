@@ -2,6 +2,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { FaMoon } from "react-icons/fa";
+import { withStoreConsumer } from "./Store/Store";
 
 const Container = styled.div`
   background-color: ${props =>
@@ -91,9 +92,9 @@ const Menu = props => {
 
 export default Menu;
 
-const About = ({ setAboutModal }) => {
+const About = withStoreConsumer(({ setAboutModal, themeName }) => {
   return (
-    <nav id="menu">
+    <Container id="menu" themeName={themeName}>
       <div className="inner" style={{ textAlign: "left" }}>
         <h3>Hello and welcome to the Hirvitek blog</h3>
         <p>
@@ -109,13 +110,13 @@ const About = ({ setAboutModal }) => {
       <a className="close" onClick={() => setAboutModal(false)}>
         Close
       </a>
-    </nav>
+    </Container>
   );
-};
+});
 
-const Contact = ({ setContactModal }) => {
+const Contact = withStoreConsumer(({ setContactModal, themeName }) => {
   return (
-    <nav id="menu">
+    <Container themeName={themeName} id="menu">
       <div
         className="inner"
         style={{ textAlign: "left", minWidth: "310px", width: "50%" }}
@@ -151,6 +152,6 @@ const Contact = ({ setContactModal }) => {
       <a className="close" onClick={() => setContactModal(false)}>
         Close
       </a>
-    </nav>
+    </Container>
   );
-};
+});

@@ -16,8 +16,6 @@ class Post extends React.Component {
       articleStart: true,
       themeName: "morning"
     };
-
-    this.handleThemeChange = this.handleThemeChange.bind(this);
   }
 
   //Dynamic SSR html caching
@@ -31,13 +29,6 @@ class Post extends React.Component {
 
   componentDidMount() {
     this.cachePost();
-  }
-
-  handleThemeChange() {
-    this.setState(prevState => {
-      const nextState = prevState.themeName === "morning" ? "night" : "morning";
-      return { themeName: nextState };
-    });
   }
 
   render() {
@@ -58,7 +49,6 @@ class Post extends React.Component {
           post={this.props.post}
           createdAt={this.props.createdAt}
           themeName={this.props.themeName}
-          handleThemeChange={this.props.handleThemeChange}
         />
 
         <div

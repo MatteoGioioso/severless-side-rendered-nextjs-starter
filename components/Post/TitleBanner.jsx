@@ -35,7 +35,6 @@ const PostTitleContainer = styled.div`
 const TitleBanner = ({
   post,
   createdAt,
-  handleThemeChange,
   themeName
 }) => {
   return (

@@ -18,6 +18,7 @@ import {
   RedditIcon,
   EmailIcon
 } from "react-share";
+import { withStoreConsumer } from "../Store/Store";
 
 const iconStyle = css`
   cursor: pointer;
@@ -46,58 +47,68 @@ const EmailIconStyled = styled(EmailIcon)`
   ${iconStyle}
 `;
 
-const SharingButtons = ({ url }) => {
+const getStyleByThemName = themeName => {
+  const isMorningTheme = () => themeName === "morning";
+
+  return {
+    iconBgStyle: isMorningTheme() ? colors.whitebg : colors.bgalt,
+    logoFillColor: isMorningTheme() ? "rgba(0,0,0,.76)" : colors.whitebg
+  };
+};
+
+const SharingButtons = ({ url, themeName }) => {
+  const styles = getStyleByThemName(themeName);
   return (
     <>
       <FacebookShareButton url={url}>
         <FacebookIconStyled
           size={40}
-          iconBgStyle={{ fill: colors.whitebg }}
-          logoFillColor={"rgba(0,0,0,.76)"}
+          iconBgStyle={{ fill: styles.iconBgStyle }}
+          logoFillColor={styles.logoFillColor}
         />
       </FacebookShareButton>
 
       <RedditShareButton url={url}>
         <RedditIconStyled
           size={40}
-          iconBgStyle={{ fill: colors.whitebg }}
-          logoFillColor={"rgba(0,0,0,.76)"}
+          iconBgStyle={{ fill: styles.iconBgStyle }}
+          logoFillColor={styles.logoFillColor}
         />
       </RedditShareButton>
 
       <TwitterShareButton url={url}>
         <TwitterIconStyled
           size={40}
-          iconBgStyle={{ fill: colors.whitebg }}
-          logoFillColor={"rgba(0,0,0,.76)"}
+          iconBgStyle={{ fill: styles.iconBgStyle }}
+          logoFillColor={styles.logoFillColor}
         />
       </TwitterShareButton>
 
       <LinkedinShareButton url={url}>
         <LinkedinIconStyled
           size={40}
-          iconBgStyle={{ fill: colors.whitebg }}
-          logoFillColor={"rgba(0,0,0,.76)"}
+          iconBgStyle={{ fill: styles.iconBgStyle }}
+          logoFillColor={styles.logoFillColor}
         />
       </LinkedinShareButton>
 
       <WhatsappShareButton url={url}>
         <WhatsappIconStyled
           size={40}
-          iconBgStyle={{ fill: colors.whitebg }}
-          logoFillColor={"rgba(0,0,0,.76)"}
+          iconBgStyle={{ fill: styles.iconBgStyle }}
+          logoFillColor={styles.logoFillColor}
         />
       </WhatsappShareButton>
 
       <EmailShareButton url={url}>
         <EmailIconStyled
           size={40}
-          iconBgStyle={{ fill: colors.whitebg }}
-          logoFillColor={"rgba(0,0,0,.76)"}
+          iconBgStyle={{ fill: styles.iconBgStyle }}
+          logoFillColor={styles.logoFillColor}
         />
       </EmailShareButton>
     </>
   );
 };
 
-export default SharingButtons;
+export default withStoreConsumer(SharingButtons);
