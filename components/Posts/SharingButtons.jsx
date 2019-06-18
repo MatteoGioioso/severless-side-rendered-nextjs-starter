@@ -56,7 +56,8 @@ const getStyleByThemName = themeName => {
   };
 };
 
-const SharingButtons = ({ url, themeName }) => {
+const SharingButtons = ({ themeName }) => {
+  const url = window.location.pathname;
   const styles = getStyleByThemName(themeName);
   return (
     <>

@@ -72,7 +72,10 @@ export function promptWebShare() {
             url: options.url
           })
           .then(() => callback())
-          .catch(error => console.log("Error sharing", error));
+          .catch(error => {
+            callback()
+            console.log("Error sharing", error)
+          });
       }
     }
   };

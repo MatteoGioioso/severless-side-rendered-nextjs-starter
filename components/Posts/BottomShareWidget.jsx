@@ -15,7 +15,7 @@ const BottomSharedWidget = ({ post }) => {
       {promptWebShare().doesWebShareExist() ? (
         <WebShareButton post={post} />
       ) : (
-        <SharingButtons url={post.url} />
+        <SharingButtons />
       )}
     </WidgetContainer>
   );
