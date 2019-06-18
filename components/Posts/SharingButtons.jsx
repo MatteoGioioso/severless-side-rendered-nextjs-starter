@@ -57,7 +57,7 @@ const getStyleByThemName = themeName => {
 };
 
 const SharingButtons = ({ themeName }) => {
-  const url = window.location.pathname;
+  const url = "https://blog.hirvitek.com/" + window.location.pathname;
   const styles = getStyleByThemName(themeName);
   return (
     <>

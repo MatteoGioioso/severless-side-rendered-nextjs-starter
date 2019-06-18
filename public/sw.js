@@ -1,7 +1,7 @@
 importScripts("sw-dynamic-assets.js");
 importScripts("idb.js");
 
-const SW_VERSION = "50d4a0a5f98ad2b5753378088ac84ea7"
+const SW_VERSION = "305bcc0c22b9ba957398bb0bdcc651e4"
 
 const STATIC_CACHE = "static-cache";
 const CACHE_MAX_AGE_DAYS = 7;
