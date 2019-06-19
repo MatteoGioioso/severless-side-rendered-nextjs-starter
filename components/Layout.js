@@ -3,6 +3,7 @@ import Header from "./Header";
 import Menu from "./Menu";
 import Footer from "./Footer";
 import React from "react";
+import Head from "next/head";
 import { Notification } from "react-notification";
 import { initGA, logPageView } from "../services/GoogleAnalytics";
 import {
@@ -127,6 +128,20 @@ class Layout extends React.Component {
           this.state.isMenuVisible ? "is-menu-visible" : ""
         }`}
       >
+        <Head>
+          {this.props.themeName === "morning" ? (
+            <>
+              <link href="/static/css/a11y-light.css" rel="stylesheet" />
+              <meta name="theme-color" content={colors.whitebg} />
+            </>
+          ) : (
+            <>
+              <link href="/static/css/a11y-dark.css" rel="stylesheet" />
+              <meta name="theme-color" content={colors.bgalt} />
+            </>
+          )}
+        </Head>
+
         <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
 
         <Wrapper id="wrapper" themeName={this.props.themeName}>
@@ -157,6 +172,7 @@ class Layout extends React.Component {
             color: colors.whitebg
           }}
           actionStyle={{ color: "#f45c42" }}
+          barStyle={{ maxWidth: "300px" }}
         />
 
         <Notification
