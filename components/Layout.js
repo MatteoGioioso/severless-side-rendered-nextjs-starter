@@ -129,10 +129,11 @@ class Layout extends React.Component {
         }`}
       >
         <Head>
+          <meta name="apple-mobile-web-app-capable" content="yes" />
           {this.props.themeName === "morning" ? (
             <>
               <link href="/static/css/a11y-light.css" rel="stylesheet" />
-              <meta name="theme-color" content={colors.whitebg} />
+              <meta name="theme-color" content="#f1eae2" />
             </>
           ) : (
             <>

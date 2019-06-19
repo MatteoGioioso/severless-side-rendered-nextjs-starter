@@ -65,6 +65,13 @@ export function promptWebShare() {
     doesWebShareExist: () => Boolean(navigator.share),
     sharePost: (options, callback) => {
       if (navigator.share) {
+
+        //If the user will choose cancel the promise wont be fullfilled
+        //Therefore we need to remove the spinner
+        setTimeout(() => {
+          callback();
+        }, 3000);
+
         navigator
           .share({
             title: options.title,
@@ -73,8 +80,8 @@ export function promptWebShare() {
           })
           .then(() => callback())
           .catch(error => {
-            callback()
-            console.log("Error sharing", error)
+            callback();
+            console.log("Error sharing", error);
           });
       }
     }

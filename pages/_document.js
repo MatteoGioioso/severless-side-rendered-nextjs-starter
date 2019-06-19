@@ -46,8 +46,7 @@ export default class MyDocument extends Document {
             href="../static/images/icons/safari-pinned-tab.svg"
             color="#5bbad5"
           />
-          <meta name="msapplication-TileColor" content="#212e37" />
-          <meta name="theme-color" content="#f6f1eb" />
+          
           <link rel="manifest" href="../static/manifest.json" />
 
           <link

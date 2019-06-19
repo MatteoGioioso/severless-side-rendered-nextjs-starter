@@ -1,7 +1,7 @@
 importScripts("sw-dynamic-assets.js");
 importScripts("idb.js");
 
-const SW_VERSION = "be35921b2dc4cd7c0d5c855c820f9faf"
+const SW_VERSION = "c952c876c0515c40158b902ee85863d4"
 
 const STATIC_CACHE = "static-cache";
 const CACHE_MAX_AGE_DAYS = 7;
@@ -10,6 +10,8 @@ const appShellFiles = [
   "/idb.js",
   "/sw-dynamic-assets.js",
   "/static/css/skel.css",
+  "/static/css/a11y-dark.css",
+  "/static/css/a11y-light.css",
   "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css",
   "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2?v=4.7.0",
   "/static/images/banner.jpg",

@@ -1,23 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { colors } from "../Styled/vars";
-import {
-  FacebookShareButton,
-  LinkedinShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-  RedditShareButton,
-  EmailShareButton
-} from "react-share";
-
-import {
-  FacebookIcon,
-  TwitterIcon,
-  WhatsappIcon,
-  LinkedinIcon,
-  RedditIcon,
-  EmailIcon
-} from "react-share";
 import SharingButtons from "./SharingButtons";
 
 const WidgetContainer = styled.div`
