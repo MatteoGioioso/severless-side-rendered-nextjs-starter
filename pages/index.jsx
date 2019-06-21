@@ -4,7 +4,7 @@ import Link from "next/link";
 function Index() {
   return (
     <div>
-      <h1>Hello from nextjs serverless!</h1>
+      <h1>Hello from nextjs serverless side rendered!</h1>
       <ul>
         <li>
           <Link href="/post?id=1" as="/post/1">
