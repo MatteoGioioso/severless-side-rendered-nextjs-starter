@@ -15,7 +15,13 @@
     "serve": "npm run predeploy && npm run serve:only",
     "deploy": "npm run predeploy && firebase deploy --only hosting,functions --interactive"
   },
-  "keywords": ["serverless", "ssr", "nextj", "reactjs", "cloud functions"],
+  "keywords": [
+    "serverless",
+    "ssr",
+    "nextj",
+    "reactjs",
+    "cloud functions"
+  ],
   "author": "Matteo Gioioso",
   "license": "MIT",
   "dependencies": {
@@ -23,5 +29,8 @@
     "next": "^8.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "babel-plugin-module-resolver": "^3.2.0"
   }
 }

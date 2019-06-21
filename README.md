@@ -1,2 +1,2 @@
-# Serverless side render blog
-## Next.js, Google Cloud Functions
+# Serverless side render blog with Next.js starter kit
+## Next.js, Google Cloud Functions, Firebase hosting

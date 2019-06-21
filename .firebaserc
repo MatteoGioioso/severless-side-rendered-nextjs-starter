@@ -1,14 +1,5 @@
 {
   "projects": {
-    "default": "hirviweb"
-  },
-  "targets": {
-    "hirviweb": {
-      "hosting": {
-        "blog": [
-          "hirviblog"
-        ]
-      }
-    }
+    "default": "serverless_blog"
   }
 }
