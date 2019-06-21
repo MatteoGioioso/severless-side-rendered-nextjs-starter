@@ -1,5 +1,5 @@
 {
-  "name": "hirviblog",
+  "name": "serverless_blog",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -15,42 +15,13 @@
     "serve": "npm run predeploy && npm run serve:only",
     "deploy": "npm run predeploy && firebase deploy --only hosting,functions --interactive"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["serverless", "ssr", "nextj", "reactjs", "cloud functions"],
+  "author": "Matteo Gioioso",
+  "license": "MIT",
   "dependencies": {
-    "@contentful/rich-text-html-renderer": "^13.1.0",
-    "@contentful/rich-text-react-renderer": "^13.2.0",
-    "@contentful/rich-text-types": "^13.1.0",
-    "@researchgate/react-intersection-observer": "^1.0.0",
-    "@sentry/browser": "^5.3.0",
-    "autoprefixer": "^9.1.5",
-    "babel-plugin-module-resolver": "^3.1.1",
-    "babel-plugin-wrap-in-js": "^1.1.1",
-    "contentful": "^7.6.0",
     "express": "^4.17.0",
-    "glob": "^7.1.3",
-    "marked": "^0.6.2",
     "next": "^8.1.0",
-    "next-seo": "^1.11.2",
-    "node-sass": "^4.9.3",
-    "postcss-easy-import": "^3.0.0",
-    "postcss-loader": "^3.0.0",
-    "raw-loader": "^0.5.1",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-ga": "^2.5.7",
-    "react-highlight": "^0.12.0",
-    "react-icons": "^3.7.0",
-    "react-loading-skeleton": "^1.1.2",
-    "react-notification": "^6.8.4",
-    "react-share": "^3.0.0",
-    "sass-loader": "^7.1.0",
-    "styled-components": "^4.2.0",
-    "universal-cookie": "^4.0.0"
-  },
-  "devDependencies": {
-    "cpx": "^1.5.0",
-    "rimraf": "^2.6.3"
+    "react-dom": "^16.8.6"
   }
 }

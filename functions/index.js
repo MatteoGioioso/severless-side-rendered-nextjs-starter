@@ -11,8 +11,8 @@ app.get("/", (request, response) => {
   mainPage.render(request, response);
 });
 
-app.get("/post/:postId", (request, response) => {
+app.get("/post/:id", (request, response) => {
   postPage.render(request, response);
 });
 
-exports.hirviblogapi = functions.https.onRequest(app);
+exports.api = functions.https.onRequest(app);

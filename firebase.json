@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "target": "blog",
     "public": "public",
     "ignore": [
       "firebase.json",
@@ -9,7 +8,7 @@
     "rewrites": [
       {
         "source": "**/**",
-        "function": "hirviblogapi"
+        "function": "api"
       }
     ]
   },
