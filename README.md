@@ -9,6 +9,11 @@
 
 ---
 
+### Blog post
+For more info check my blog post: https://blog.hirvitek.com/post/this-overkill-blog!-how-i-build-it-using-nextjs-in-serverless-mode_5b0NEa2oBA8QPWFqieACbV
+
+---
+
 ### New feature coming
-- Progressive web app (PWA) starter kit
+- Service worker with build script
 - https support for serverless emulator
