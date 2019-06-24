@@ -9,6 +9,11 @@ function Post({id}) {
 }
 
 Post.getInitialProps = async request => {
+  /**
+   * getId
+   * @param {Object} request 
+   * Check whether getInitialProps is executed on the server or client
+   */
   const getId = request => {
     if (request.req) {
       return request.req.params.id;

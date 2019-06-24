@@ -12,7 +12,7 @@ function Index() {
           </Link>
         </li>
         <li>
-          <Link href="/post?id=1" as="/post/1">
+          <Link href="/post?id=2" as="/post/2">
             <a>Post 2</a>
           </Link>
         </li>
